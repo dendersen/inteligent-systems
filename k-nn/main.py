@@ -10,9 +10,10 @@ class knn:
     self.Type1:List[List[int]] = knownDataType1
     self.Type2:List[List[int]] = knownDataType2
   
-  def dataSet(self,data):
+  def UpdateDataset(self,data):
     self.data = data[0] #n dimension list. list 1 = data pieces containing a list 2 = features
-    self.solution = data[1]#solution to data piece of index x
+    self.solution:List[bool] = data[1]#solution to data piece of index x #true means type 1, false means type 2
+    self.error = [False]*len(self.solution)
     #self.solution[0] is the answer to self.data [0]
   
   def distance(self,item0,item1) -> int:
@@ -30,7 +31,10 @@ class knn:
         out += self.distCalc(i,j)
     return out
   
-  def runData(self,rang:range):
+  def runData(self,rang:range = -1) -> List[List[List[int]]]:
+    if rang == -1:
+      rang = range(0,len(self.data))
+    
     for i in rang:
       distType1 = []
       distType2 = []
@@ -48,6 +52,29 @@ class knn:
           T2 += 1
       if T1 > T2:
         self.Type1.append(self.data[i])
+        self.error[i] = not self.solution[i]
       else:
         self.Type2.append(self.data[i])
+        self.error[i] = self.solution[i]
     
+    return(self.Type1,self.Type2)
+  
+  def visualize(self) -> None:
+    plotter.plot(self.Type1,self.Type2)
+  
+  def errorRate(self)->int:
+    e = 0
+    for i in self.error:
+      if i:
+        e += 1
+    return e
+  
+  def testK(self,rang: range):
+    kk = []
+    for i in rang:
+      Knn = knn(self.knownDataType1,self.knownDataType2,i)
+      knn.UpdateDataset(Knn,[self.data,self.solution])
+      knn.runData(Knn)
+      e = knn.errorRate(Knn)
+      kk.append([i,e])
+    pass
