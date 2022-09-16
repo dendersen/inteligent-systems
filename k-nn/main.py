@@ -17,9 +17,8 @@ class knn:
     #self.solution[0] is the answer to self.data [0]
   
   def distance(self,item0,item1) -> int:
-    return math.sqrt(
-      self.distCalc(self.data[item0],
-      item1))
+    a = self.distCalc(self.data[item0],item1)
+    return math.sqrt(abs(a))
   
   def distCalc(self,arr0:list,arr1:list) -> int:
     out = 0
@@ -63,7 +62,7 @@ class knn:
     return(self.Type1,self.Type2)
   
   def visualize(self) -> None:
-    plotter.plot(self.Type1,self.Type2)
+    plotter.plot([*zip(*self.Type1)],[*zip(*self.Type2)])
   
   def errorRate(self)->int:
     e = 0

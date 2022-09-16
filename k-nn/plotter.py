@@ -3,19 +3,20 @@ import numpy as np
 from typing import List
 
 #Funktion for x,y-værdier
-def plot (type1:List[List[int]],type2: List[List[int]]) -> None:
+def plot (Type1:zip,Type2: zip) -> None:
   #type1[0] giver liste over x af type 1
-  type1[0]
+  # type1[0]
   #type1[1] giver liste over y af type 1
-  type1[1]
+  # type1[1]
   #type2[0] giver liste over x af type 2
-  type2[0]
+  # type2[0]
   #type2[1] giver liste over y af type 2
-  type2[1]
+  # type2[1]
   #----------------
   #Combine values for x and y
-  x = np.concatenate((type1[0],type2[0]))
-  y = np.concatenate((type1[1],type2[1]))
+
+  x = np.concatenate((Type1[0],Type2[0]))
+  y = np.concatenate((Type1[1],Type2[1]))
   #----------------
   #Plot size limit
   plt.xlim(min(x-2), max(x+2))
@@ -26,8 +27,8 @@ def plot (type1:List[List[int]],type2: List[List[int]]) -> None:
   plt.style.use("seaborn-whitegrid")
   #----------------
   #Makes point plot
-  cross = plt.plot(type1[0], type1[1], "x", markersize=20, markeredgecolor="red")
-  circle = plt.plot(type2[0], type2[1], "o", markersize=20, markeredgecolor="black", markerfacecolor="green")
+  cross = plt.plot(Type1[0], Type1[1], "x", markersize=20, markeredgecolor="red")
+  circle = plt.plot(Type2[0], Type2[1], "o", markersize=20, markeredgecolor="black", markerfacecolor="green")
   #printer et plot over hvor de to typer er
   plt.show(cross,circle)
 
