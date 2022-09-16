@@ -14,6 +14,7 @@ class knn:
     self.data = data[0] #n dimension list. list 1 = data pieces containing a list 2 = features
     self.solution:List[bool] = data[1]#solution to data piece of index x #true means type 1, false means type 2
     self.error = [False]*len(self.solution)
+    self.kk = []
     #self.solution[0] is the answer to self.data [0]
   
   def distance(self,item0,item1) -> int:
@@ -69,12 +70,16 @@ class knn:
         e += 1
     return e
   
-  def testK(self,rang: range):
-    kk = []
+  def testK(self,rang: range)->List[List[int]]:
     for i in rang:
       Knn = knn(self.knownDataType1,self.knownDataType2,i)
       knn.UpdateDataset(Knn,[self.data,self.solution])
       knn.runData(Knn)
       e = knn.errorRate(Knn)
-      kk.append([i,e])
-    pass
+      self.kk.append([i,e])
+    return self.kk
+
+  def visualizeK(self)->None:
+    if len(self.kk) < 2:
+      self.testK(range(1,8,2))
+    plotter.plotK(self.kk)
