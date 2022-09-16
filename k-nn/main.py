@@ -1,5 +1,4 @@
 import math
-from readline import append_history_file
 import plotter
 from typing import List
 
@@ -10,7 +9,7 @@ class knn:
     self.Type1:List[List[int]] = knownDataType1
     self.Type2:List[List[int]] = knownDataType2
   
-  def UpdateDataset(self,data):
+  def UpdateDataset(self,data:List[List]):
     self.data = data[0] #n dimension list. list 1 = data pieces containing a list 2 = features
     self.solution:List[bool] = data[1]#solution to data piece of index x #true means type 1, false means type 2
     self.error = [False]*len(self.solution)
@@ -18,15 +17,18 @@ class knn:
     #self.solution[0] is the answer to self.data [0]
   
   def distance(self,item0,item1) -> int:
-    return math.sqrt(self.distCalc(self.data[item0],self.data[item1]))
+    return math.sqrt(
+      self.distCalc(self.data[item0],
+      item1))
   
   def distCalc(self,arr0:list,arr1:list) -> int:
+    out = 0
     if type(arr0) != type(arr1): 
       print (TypeError(),"incorrect dimensionel length in array",arr0,arr1)
       return -1
     if(type(arr0[0]) == int):
       for i,j in zip(arr0,arr1):
-        out += (i,j)**2
+        out += (i-j)**2
     else:
       for i,j in zip(arr0,arr1):
         out += self.distCalc(i,j)
@@ -40,14 +42,14 @@ class knn:
       distType1 = []
       distType2 = []
       for j in self.Type1:
-        distType1.append(self.distance(self.data[i],j))
+        distType1.append(self.distance(i,j))
       for j in self.Type2:
-        distType2.append(self.distance(self.data[i],j))
+        distType2.append(self.distance(i,j))
       distType1.sort()
       distType2.sort()
-      T1,T2 = 0
+      T1,T2 = 0,0
       for j in range(0,self.k):
-        if distType1(T1) < distType2(T2):
+        if distType1[T1] < distType2[T2]:
           T1 += 1
         else:
           T2 += 1
