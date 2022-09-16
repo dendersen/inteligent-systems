@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import List
+from typing import List, Tuple
 
 #Funktion for x,y-værdier
-def plot (Type1:zip,Type2: zip) -> None:
+def plot (Type1:List[Tuple[int]],Type2: List[Tuple[int]]) -> None:
   #type1[0] giver liste over x af type 1
   # type1[0]
   #type1[1] giver liste over y af type 1
@@ -27,10 +27,10 @@ def plot (Type1:zip,Type2: zip) -> None:
   plt.style.use("seaborn-whitegrid")
   #----------------
   #Makes point plot
-  cross = plt.plot(Type1[0], Type1[1], "x", markersize=20, markeredgecolor="red")
-  circle = plt.plot(Type2[0], Type2[1], "o", markersize=20, markeredgecolor="black", markerfacecolor="green")
+  cross = plt.plot(Type1[0], Type1[1], "x", markersize=(100/(max(x)-min(y))), markeredgecolor="red")
+  circle = plt.plot(Type2[0], Type2[1], "o", markersize=(100/(max(x)-min(y))), markeredgecolor="black", markerfacecolor="green")
   #printer et plot over hvor de to typer er
-  plt.show(cross,circle)
+  plt.show()
 
 
 def plotK (type1:List[List[int]]) -> None:
