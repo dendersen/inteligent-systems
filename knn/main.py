@@ -3,7 +3,7 @@ import plotter
 from typing import List
 
 
-class knn:
+class Knn:
   def __init__(self,knownDataType1:List[List[int]],knownDataType2:List[List[int]],k:int = 5) -> None:
     self.k = k
     self.Type1:List[List[int]] = knownDataType1
