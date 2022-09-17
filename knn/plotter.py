@@ -40,8 +40,8 @@ def plotK (type1:List[List[int]]) -> None:
   type1[1]
   #----------------
   #Plot size limit
-  plt.xlim(min(type1[0]-2), max(type1[0]+2))
-  plt.ylim(min(type1[1]-2), max(type1[1]+2))
+  plt.xlim(0, max(type1[0])+2)
+  plt.ylim(min(type1[1])-2, max(type1[1])+2)
   plt.grid()
   #----------------
   #Makes lines between each k-point
