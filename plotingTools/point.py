@@ -1,6 +1,5 @@
 from math import sqrt
-from struct import pack
-import struct
+from struct import pack,unpack
 from typing import List
 class Point:
   pass
@@ -45,7 +44,7 @@ class Point:
     return max(diff[0],diff[1])
 
 def floatToBin(F:float)->str:
-  return bin(struct.unpack("!i",struct.pack("!f",F))[0]).replace("0b","")
+  return bin(unpack("!i",pack("!f",F))[0]).replace("0b","")
 
 def dif(i:list,j:list):
   Dif = 0

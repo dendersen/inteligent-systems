@@ -1,6 +1,5 @@
-import math
-from point import Point
-import plotter
+from plotingTools.point import Point as Point
+from plotingTools.plotter import plot2,plot1
 from typing import List
 
 
@@ -61,7 +60,7 @@ class Knn:
     return(self.Type1,self.Type2)
   
   def visualize(self) -> None:
-    plotter.plot(self.Type1,self.Type2)
+    plot2(self.Type1,self.Type2)
   
   def errorRate(self)->int:
     e = 0
@@ -86,7 +85,7 @@ class Knn:
     if len(self.kk) < 2:
       print("testk() has not run, checking stardard k's")
       self.testK(-1)
-    plotter.plotK([*zip(*self.kk)])
+    plot1([*zip(*self.kk)])
   
   def visualizeSolution(self):
     Type1 = self.ori[0]
@@ -97,4 +96,4 @@ class Knn:
         Type1.append(i)
       else:
         Type2.append(i)
-    plotter.plot(Type1,Type2)
+    plot2(Type1,Type2)

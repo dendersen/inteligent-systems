@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
-import numpy as np
 from typing import List, Tuple
 
-from point import Point
+from plotingTools.point import Point
 
 #Funktion for x,y-værdier
-def plot (Type1:List[Point],Type2: List[Point]) -> None:
+def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #type1[0] giver liste over x af type 1
   # type1[0]
   #type1[1] giver liste over y af type 1
@@ -34,7 +33,7 @@ def plot (Type1:List[Point],Type2: List[Point]) -> None:
   plt.show()
 
 
-def plotK (type1:List[Point]) -> None:
+def plot1 (type1:List[Point]) -> None:
   #type1[0] giver liste over x
   type1[0]
   #type1[1] giver liste over y
