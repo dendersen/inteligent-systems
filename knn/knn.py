@@ -1,25 +1,25 @@
 from plotingTools.point import Point as Point
 from plotingTools.plotter import plot2,plot1
-from typing import List, Tuple
+from typing import List
 
 
 
 
 class Knn:
-  def __init__(self,knownDataType1:List[Point],knownDataType2:List[Point],k:int = 5,distID = 0) -> None:
+  def __init__(self,knownDataType:List[List[Point]],k:int = 5,distID:int = 0) -> None:
     self.k = k
-    self.ori = [knownDataType1,knownDataType2]#saves original know data, this ensures that you can run a test on multiple k
-    self.Type1:List[Point] = knownDataType1#contains all calculated points of type 1
-    self.Type2:List[Point] = knownDataType2#contains all calculated points of type 2
+    self.ori:List[List[Point]] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
+    self.Type:List[List[Point]] = knownDataType#contains all calculated points of differentTypes
     self.distanceCalcID = distID#which formula should be used to calculate distance
+    self.numberOfTypes = len(knownDataType)
   
-  def UpdateDataset(self,data:List[Point],solution:List[bool] = -1)->None:
+  def UpdateDataset(self,data:List[Point],solution:List[int] = -1)->None:
     if solution == -1:
-      solution = [False]*(len(data))
+      solution = [0]*(len(data))
       #in case no solution is give generates a buffer that is not meant to be read but can be read as a way to know results
     
     self.data = data #data pieces containing a list of points
-    self.solution:List[bool] = solution#solution to data piece of index x #true means type 1, false means type 2
+    self.solution:List[int] = solution#solution to data piece of index x #true means type 1, false means type 2
     self.error = [False]*(len(self.solution))
     #self.solution[0] is the answer to self.data [0]
     self.kk = []#constains error numbers for different solutions
@@ -32,36 +32,28 @@ class Knn:
       rang = range(0,len(self.data))#in case a range i not given the program will run through all points
     
     for i in rang:
-      distType1:List[int] = []#saves all type 1 points
-      distType2:List[int] = []#saves all type 1 points
-      for j in self.Type1:
-        distType1.append(self.distance(self.data[i],j))#finds distance to all known type 1
-      for j in self.Type2:
-        distType2.append(self.distance(self.data[i],j))#finds distance to all known type 1
+      distType:List[List[int]] = []#saves all types of points
+      for l in range(0,self.numberOfTypes):
+        for j in self.Type[l]:
+          distType[l].append(self.distance(self.data[i],j))#finds distance to all known type 1
+      for l in range(0,self.numberOfTypes):
+        distType[l].sort()#sorts distances
       
-      distType1.sort()#sorts distances
-      distType2.sort()
-      
-      T1,T2 = 0,0#
+      T = [0]*self.numberOfTypes #stores how far into the list points have been checked
       
       for j in range(0,self.k):
-        if len(distType2) - 1 == T2 or len(distType1) - 1 == T1: #checks for more points
+        if any(len(distType[i]) == T[t] for t in range(0,self.numberOfTypes)): #checks for more points
           break
-        if distType1[T1] < distType2[T2]: #finds nearest next point
-          T1 += 1
-        else:
-          T2 += 1
-      if T1 > T2: #saves result and checks for errors
-        self.Type1.append(self.data[i])
-        self.error[i] = not self.solution[i]#if solution is true (meant to be type 1) it will write false (no error) if not it writes true (error present), opposit if result is type 2
-      else:
-        self.Type2.append(self.data[i])
-        self.error[i] = self.solution[i]
-    
-    return[self.Type1,self.Type2]#returns the points of type 1 and 2
+        s = 0
+        for t in range (1,self.numberOfTypes):
+          if distType[t][T[t]] < distType[s][T[s]]:#finds nearest next point
+            s = t
+      self.Type[s].append(self.data[i])
+      self.error[i] = s == self.solution
+    return self.Type#returns the points of each type
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plot2(self.Type1,self.Type2)
+    plot2(self.Type[0],self.Type[1])#TODO make plotN
   
   def errorRate(self)->int:#counts the number of True in error array
     e = 0
