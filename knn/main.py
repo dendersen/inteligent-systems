@@ -58,7 +58,13 @@ class Knn:
       distType2.sort()
       T1,T2 = 0,0
       for j in range(0,self.k):
-        if distType1[T1] < distType2[T2]:
+        if len(distType2) - 1 == T2 and len(distType1) - 1 == T1:
+          break
+        if len(distType1) - 1 == T1:
+          T2 += 1
+        elif len(distType2) -1 == T2:
+          T1 += 1
+        elif distType1[T1] < distType2[T2]:
           T1 += 1
         else:
           T2 += 1
@@ -79,7 +85,6 @@ class Knn:
     for i in self.error:
       if i:
         e += 1
-    print(e)
     return e
   
   def testK(self,rangeOfK: range = -1,rangeOfData:range = -1)->List[List[int]]:
@@ -87,8 +92,8 @@ class Knn:
       rangeOfK = range(1,8,2)
     
     for i in rangeOfK:
-      k_nn = Knn(self.ori[0],self.ori[1],i)
-      k_nn.UpdateDataset1(self.data,self.solution)
+      k_nn = Knn(self.ori[0].copy(),self.ori[1].copy(),i)
+      k_nn.UpdateDataset([self.data.copy(),self.solution.copy()])
       k_nn.runData(rangeOfData)
       e = k_nn.errorRate()
       print(i,e)
@@ -97,7 +102,8 @@ class Knn:
   
   def visualizeK(self)->None:
     if len(self.kk) < 2:
-      self.testK(range(1,8,2))
+      print("testk() has not run, checking stardard k's")
+      self.testK(-1)
     plotter.plotK([*zip(*self.kk)])
   
   def visualizeSolution(self):
