@@ -22,7 +22,6 @@ def quick():
   k.visualize()
   k.visualizeSolution()
   print(k.errorRate())
-  print (dataKnown1)
   t = Knn(dataKnown1.copy(),dataKnown2.copy())
   t.UpdateDataset(dataStart.copy(),solution.copy())
   t.testK(range(1,26,2))
