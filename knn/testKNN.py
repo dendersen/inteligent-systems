@@ -8,7 +8,7 @@ def solutionGen(data:List[Point],a:float = 0.2,b:float=-1.6,c:float=-0.3):
     if i.y > a * (i.x ** 2) + i.x ** (b) + c:
       sol.append(0)
     else:
-      sol.append(0)
+      sol.append(1)
   return sol 
 
 dataStart:List[Point] = [Point(1,2),Point(5,6),Point(7,8),Point(9,10),Point(10,2),Point(3,7),Point(1,6),Point(7,5),Point(9,30),Point(8,28),Point(18,10),Point(2,26),Point(6,12),Point(19,20),Point(17,13),Point(4,18),Point(13,15),Point(8,4),Point(6,2),Point(10,7),Point(2,12),Point(14,30),Point(6,20),Point(6,16),Point(8,21),Point(2,23),Point(18,2),Point(20,7),Point(4,25),Point(12,20),Point(7,17),Point(14,26),Point(14,16),Point(6,24),Point(14,6),Point(4,21),Point(12,12),Point(1,31),Point(17,16),Point(4,14),Point(2,20),Point(15,11),Point(6,22),Point(2,17),Point(20,15),Point(16,19),Point(4,18),Point(5,10),Point(21,9),Point(16,6),Point(9,32),Point(4,31),Point(20,27),Point(16,30),Point(7,30),Point(14,22),Point(8,24),Point(6,12),Point(4,9),Point(4,28),Point(1,29),Point(9,27),Point(12,8),Point(20,19),Point(20,17),Point(20,5),Point(14,2),Point(20,12)]

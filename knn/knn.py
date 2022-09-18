@@ -22,7 +22,7 @@ class Knn:
     self.solution:List[int] = solution#solution to data piece of index x #true means type 1, false means type 2
     self.error = [False]*(len(self.solution))
     #self.solution[0] is the answer to self.data [0]
-    self.kk = []#constains error numbers for different solutions
+    self.kk:List[Point] = []#constains error numbers for different solutions
   
   def distance(self,item0:Point,item1:Point) -> int:
     return item0.distance(self.distanceCalcID,item1)#calls the distance method contained in the class point
@@ -32,7 +32,7 @@ class Knn:
       rang = range(0,len(self.data))#in case a range i not given the program will run through all points
     
     for i in rang:
-      distType:List[List[int]] = []#saves all types of points
+      distType:List[List[int]] = [[]*self.numberOfTypes]*self.numberOfTypes#saves all types of points
       for l in range(0,self.numberOfTypes):
         for j in self.Type[l]:
           distType[l].append(self.distance(self.data[i],j))#finds distance to all known type 1
@@ -41,19 +41,20 @@ class Knn:
       
       T = [0]*self.numberOfTypes #stores how far into the list points have been checked
       
+      s = 0
       for j in range(0,self.k):
-        if any(len(distType[i]) == T[t] for t in range(0,self.numberOfTypes)): #checks for more points
+        if any(len(distType[t]) == T[t] for t in range(0,self.numberOfTypes)): #checks for more points
           break
-        s = 0
         for t in range (1,self.numberOfTypes):
           if distType[t][T[t]] < distType[s][T[s]]:#finds nearest next point
             s = t
+            T[s] #TODO
       self.Type[s].append(self.data[i])
       self.error[i] = s == self.solution
     return self.Type#returns the points of each type
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plot2(self.Type[0],self.Type[1])#TODO make plotN
+    plot2(self.Type)
   
   def errorRate(self)->int:#counts the number of True in error array
     e = 0
@@ -67,11 +68,11 @@ class Knn:
       rangeOfK = range(1,8,2)
     
     for i in rangeOfK:
-      k_nn = Knn(self.ori[0].copy(),self.ori[1].copy(),i)
-      k_nn.UpdateDataset(self.data.copy(),self.solution.copy())
-      k_nn.runData(-1)
-      e = k_nn.errorRate()
-      self.kk.append([i,e])
+      k_nn = Knn([self.ori[0].copy(),self.ori[1].copy()],i)#creates a new knn algorithm with a new k
+      k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
+      k_nn.runData()#runs the algorithm
+      e = k_nn.errorRate()#checks the number of errors
+      self.kk.append(Point(i,e))#saves the errors
     return self.kk
   
   def visualizeK(self)->None:
