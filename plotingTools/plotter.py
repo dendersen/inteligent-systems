@@ -6,13 +6,9 @@ from plotingTools.point import Point
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #type1[0] giver liste over x af type 1
-  # type1[0]
   #type1[1] giver liste over y af type 1
-  # type1[1]
   #type2[0] giver liste over x af type 2
-  # type2[0]
   #type2[1] giver liste over y af type 2
-  # type2[1]
   #----------------
   #Combine values for x and y
   x = (*(i.x for i in Type1),*( i.x for i in Type2))
@@ -27,8 +23,8 @@ def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   plt.style.use("seaborn-whitegrid")
   #----------------
   #Makes point plot
-  cross = plt.plot([*(i.x for i in Type1)], [*(i.y for i in Type1)], "x", markersize=(100/(max(x)-min(y))), markeredgecolor="red")
-  circle = plt.plot([*(i.x for i in Type2)], [*(i.y for i in Type2)], "o", markersize=(100/(max(x)-min(y))), markeredgecolor="black", markerfacecolor="green")
+  plt.plot([*(i.x for i in Type1)], [*(i.y for i in Type1)], "x", markersize=(100/(max(x)-min(y))), markeredgecolor="red")
+  plt.plot([*(i.x for i in Type2)], [*(i.y for i in Type2)], "o", markersize=(100/(max(x)-min(y))), markeredgecolor="black", markerfacecolor="green")
   #printer et plot over hvor de to typer er
   plt.show()
 
