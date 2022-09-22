@@ -1,21 +1,20 @@
 from plotingTools.point import Point as Point
-from plotingTools.plotter import plot2,plot1
+from plotingTools.plotter import plotn,plot1,colors
+import knn.distanceStorage as dist
 from typing import List
 
 
-
-
 class Knn:
-  def __init__(self,knownDataType:List[List[Point]],k:int = 5,distID:int = 0) -> None:
+  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0) -> None:
     self.k = k
-    self.ori:List[List[Point]] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
-    self.Type:List[List[Point]] = knownDataType#contains all calculated points of differentTypes
+    self.ori:List[Point] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
+    self.Type:List[Point] = knownDataType#contains all calculated points of differentTypes
     self.distanceCalcID = distID#which formula should be used to calculate distance
     self.numberOfTypes = len(knownDataType)
   
-  def UpdateDataset(self,data:List[Point],solution:List[int] = -1)->None:
+  def UpdateDataset(self,data:List[Point],solution:List[str] = -1)->None:
     if solution == -1:
-      solution = [0]*(len(data))
+      solution = ["lime"]*(len(data))
       #in case no solution is give generates a buffer that is not meant to be read but can be read as a way to know results
     
     self.data = data #data pieces containing a list of points
@@ -32,29 +31,51 @@ class Knn:
       rang = range(0,len(self.data))#in case a range i not given the program will run through all points
     
     for i in rang:
-      distType:List[List[int]] = [[]*self.numberOfTypes]*self.numberOfTypes#saves all types of points
-      for l in range(0,self.numberOfTypes):
-        for j in self.Type[l]:
-          distType[l].append(self.distance(self.data[i],j))#finds distance to all known type 1
-      for l in range(0,self.numberOfTypes):
-        distType[l].sort()#sorts distances
+      test = self.data[i]
+      distances:List[dist.Distance] = []
+      for j in self.Type:
+        if j != test:
+          distances.append(dist.Distance(j,self.distance(test,j)))
       
-      T = [0]*self.numberOfTypes #stores how far into the list points have been checked
-      
-      s = 0
+      distances.sort(key=dist.checkDist)
+      colorCheck:List[int] = [0] * len(colors)
+
       for j in range(0,self.k):
-        if any(len(distType[t]) == T[t] for t in range(0,self.numberOfTypes)): #checks for more points
-          break
-        for t in range (1,self.numberOfTypes):
-          if distType[t][T[t]] < distType[s][T[s]]:#finds nearest next point
-            s = t
-            T[s] #TODO
-      self.Type[s].append(self.data[i])
-      self.error[i] = s == self.solution
-    return self.Type#returns the points of each type
+        for I,l in enumerate(colors):
+          if distances[j].point.color == l:
+            colorCheck[I] += 1
+            break
+      
+      cc = [colorCheck[0],0]
+      for t,i in enumerate(colorCheck):
+        if i > cc[0]:
+          cc = [i,t]
+      
+      test.color = colors[cc[1]]
+      self.Type.append(test)
+    #   distType:List[List[int]] = [[]*self.numberOfTypes]*self.numberOfTypes#saves all types of points
+    #   for l in range(0,self.numberOfTypes):
+    #     for j in self.Type[l]:
+    #       distType[l].append(self.distance(self.data[i],j))#finds distance to all known type 1
+    #   for l in range(0,self.numberOfTypes):
+    #     distType[l].sort()#sorts distances
+      
+    #   T = [0]*self.numberOfTypes #stores how far into the list points have been checked
+      
+    #   s = 0
+    #   for j in range(0,self.k):
+    #     if any(len(distType[t]) == T[t] for t in range(0,self.numberOfTypes)): #checks for more points
+    #       break
+    #     for t in range (1,self.numberOfTypes):
+    #       if distType[t][T[t]] < distType[s][T[s]]:#finds nearest next point
+    #         s = t
+    #         T[s] #TODO
+    #   self.Type[s].append(self.data[i])
+    #   self.error[i] = s == self.solution
+    # return self.Type#returns the points of each type
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plot2(self.Type)
+    plotn(self.Type)
   
   def errorRate(self)->int:#counts the number of True in error array
     e = 0

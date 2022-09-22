@@ -43,15 +43,12 @@ def plot1 (type1:List[Point]) -> None:
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 
-def plotn(types:List[List[Point]])->None:
-  
-  colors = ["aqua","green","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","lime","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink"]
-  
-  plt.xlim(max(j.x for i in types for j in i),min(j.x for i in types for j in i))
-  plt.ylim(max(j.y for i in types for j in i), min(j.y for i in types for j in i))
-  plt.grid()
-  
-  for i in types:
-    plt.plot([*(j.x for j in types[i])],[*(j.y for j in types[i])],"o", marjersize =(100/(max(j.x for i in types for j in i)-min(j.y for i in types for j in i))),color = colors[i%len(colors)],markerfacecolor = colors[(i - i%len(colors))/len(colors) % len(colors)])
-  
+colors =("aqua","green","lime","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink")
+
+def plotn(types:List[Point])->None:
+  for t,j in enumerate(types):
+    for i in colors:
+      if i == j.color:
+        plt.scatter(j.x,j.y, color = i)
+        break
   plt.show()
