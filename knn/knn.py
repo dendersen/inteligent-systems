@@ -107,4 +107,4 @@ class Knn:
     
     for i,j in zip(self.Type[::-1].copy(),self.solution[::-1]):
       i.color = j
-    plotn(solv)
+    plotn(solv,True)
