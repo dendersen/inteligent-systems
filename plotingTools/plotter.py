@@ -49,11 +49,12 @@ def plot_line():
   y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
   return plt.plot(x_plot,y_plot)
 
-def plotn(types:List[Point])->None:
+def plotn(types:List[Point],line:bool=False)->None:
   for t,j in enumerate(types):
     for i in colors:
       if i == j.color:
         plt.scatter(j.x,j.y, color = i)
         break
-  plot_line()
+  if line:
+    plot_line()
   plt.show()
