@@ -12,13 +12,13 @@ class Knn:
     self.distanceCalcID = distID#which formula should be used to calculate distance
     self.numberOfTypes = len(knownDataType)
   
-  def UpdateDataset(self,data:List[Point],solution:List[str] = -1)->None:
-    if solution == -1:
+  def UpdateDataset(self,data:List[Point],solution:List[str] = "lime")->None:
+    if solution == "lime":
       solution = ["lime"]*(len(data))
       #in case no solution is give generates a buffer that is not meant to be read but can be read as a way to know results
     
     self.data = data #data pieces containing a list of points
-    self.solution:List[int] = solution#solution to data piece of index x #true means type 1, false means type 2
+    self.solution:List[str] = solution#solution to data piece of index x #true means type 1, false means type 2
     self.error = [False]*(len(self.solution))
     #self.solution[0] is the answer to self.data [0]
     self.kk:List[Point] = []#constains error numbers for different solutions
@@ -78,13 +78,13 @@ class Knn:
     plotn(self.Type)
   
   def errorRate(self)->int:#counts the number of True in error array
-    e = 0
-    for i in self.error:
-      if i:
-        e += 1
+    e=0
+    for i,j in zip(self.Type[::-1],self.solution[::-1]):
+      if i.color != j:
+        e+=1
     return e
   
-  def testK(self,rangeOfK: range = -1)->List[List[int]]:#test's for different k's on the current ori(original know points) and currently active dataset 
+  def testK(self,rangeOfK: range = -1) -> List[Point]:#test's for different k's on the current ori(original know points) and currently active dataset 
     if rangeOfK == -1 :#sets a default range of k
       rangeOfK = range(1,8,2)
     
@@ -103,12 +103,8 @@ class Knn:
     plot1([*zip(*self.kk)])
   
   def visualizeSolution(self)->None:
-    Type1 = self.ori[0]
-    Type2 = self.ori[1]
+    solv = self.ori
     
-    for j,i in zip(self.solution,self.data):
-      if j:
-        Type1.append(i)
-      else:
-        Type2.append(i)
-    plot2(Type1,Type2)
+    for i,j in zip(self.Type[::-1].copy(),self.solution[::-1]):
+      i.color = j
+    plotn(solv)

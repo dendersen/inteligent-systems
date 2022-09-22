@@ -28,8 +28,8 @@ def quick():
   k.UpdateDataset(dataStart.copy(),solution.copy())
   k.runData()
   k.visualize()
-  # k.visualizeSolution()
-  # print(k.errorRate())
+  k.visualizeSolution()
+  print(k.errorRate())
   
   
   # t = Knn(dataKnown1.copy(),dataKnown2.copy())
