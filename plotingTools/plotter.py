@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from typing import List, Tuple
-
+from typing import List
+from numpy import arange
 from plotingTools.point import Point
 
 #Funktion for x,y-værdier
@@ -44,6 +44,10 @@ def plot1 (type1:List[Point]) -> None:
   plt.show()
 
 colors =("aqua","green","lime","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink")
+def plot_line():
+  x_plot = arange(0.05,25,0.0001)   # start,stop,step
+  y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
+  return plt.plot(x_plot,y_plot)
 
 def plotn(types:List[Point])->None:
   for t,j in enumerate(types):
@@ -51,4 +55,5 @@ def plotn(types:List[Point])->None:
       if i == j.color:
         plt.scatter(j.x,j.y, color = i)
         break
+  plot_line()
   plt.show()
