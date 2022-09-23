@@ -39,7 +39,7 @@ def plot1 (type1:List[Point]) -> None:
   plt.grid()
   #----------------
   #Makes lines between each k-point
-  plt.plot(type1[0], type1[1], "o--", linewidth=5, markersize=(100/(max(x)-min(y))), color="blue", markerfacecolor="pink")
+  plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=(100/(max(x)-min(y))), color="blue", markerfacecolor="pink")
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 
