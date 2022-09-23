@@ -1,5 +1,6 @@
 import knn.testKNN
 
-knn.testKNN.quick()
-
-input("done? ")
+while True:
+  knn.testKNN.quick()
+  if input("done? ") == "yes":
+    break

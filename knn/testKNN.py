@@ -32,7 +32,7 @@ def quick():
   print(k.errorRate())
   
   
-  # t = Knn(dataKnown1.copy(),dataKnown2.copy())
-  # t.UpdateDataset(dataStart.copy(),solution.copy())
-  # t.testK(range(1,26,2))
-  # t.visualizeK()
+  t = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],1,1)
+  t.UpdateDataset(dataStart.copy(),solution.copy())
+  t.testK(range(1,19,2))
+  t.visualizeK()

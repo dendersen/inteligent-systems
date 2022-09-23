@@ -89,7 +89,7 @@ class Knn:
       rangeOfK = range(1,8,2)
     
     for i in rangeOfK:
-      k_nn = Knn([self.ori[0].copy(),self.ori[1].copy()],i)#creates a new knn algorithm with a new k
+      k_nn = Knn([*self.ori.copy()],i)#creates a new knn algorithm with a new k
       k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
       k_nn.runData()#runs the algorithm
       e = k_nn.errorRate()#checks the number of errors
@@ -100,7 +100,7 @@ class Knn:
     if len(self.kk) < 1:
       print("testk() has not run, checking stardard k's")
       self.testK(-1)
-    plot1([*zip(*self.kk)])
+    plot1(self.kk)
   
   def visualizeSolution(self)->None:
     solv = self.ori
