@@ -7,3 +7,6 @@ class Distance:
 
 def checkDist(dist:Distance):
   return dist.distance
+
+def colCheck(lis:list):
+  return lis[0]

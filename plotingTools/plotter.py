@@ -43,18 +43,15 @@ def plot1 (type1:List[Point]) -> None:
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 
-colors =("aqua","green","lime","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink")
+colors = ("aqua","green","lime","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink")
 def plot_line():
   x_plot = arange(0.05,25,0.0001)   # start,stop,step
   y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
   return plt.plot(x_plot,y_plot)
 
 def plotn(types:List[Point],line:bool=False)->None:
-  for t,j in enumerate(types):
-    for i in colors:
-      if i == j.color:
-        plt.scatter(j.x,j.y, color = i)
-        break
+  for j in types:
+    plt.scatter(j.x,j.y, color = j.color)
   if line:
     plot_line()
   plt.show()

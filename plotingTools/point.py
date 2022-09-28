@@ -1,14 +1,18 @@
 from math import sqrt
 from struct import pack,unpack
 from typing import List
+from plotingTools.colorList import colors
 class Point:
   pass
 
 class Point:
   def __init__(self,x:float,y:float,color:str = "lime") -> None:
+    if type(color)==int:
+      self.color = colors[color]
+    else:
+      self.color:str = color
     self.x:float = x
     self.y:float = y
-    self.color:str = color
   
   def distance(self,version:int,point:Point):
     dist = [self.euclid,self.manhattan,self.chebyshev,self.hammingManhattan,self.hammingEuclid,self.hammingChebyshev]
