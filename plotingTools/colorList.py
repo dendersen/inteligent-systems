@@ -6,7 +6,6 @@ colors = (
   "black",
   "blue",
   "brown",
-  "chartreuse",
   "chocolate",
   "coral",
   "crimson",
@@ -45,7 +44,6 @@ colors = (
   "turquoise",
   "violet",
   "wheat",
-  "white",
   "yellow",
   "yellowgreen",
 )
