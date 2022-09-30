@@ -6,13 +6,12 @@ class Point:
   pass
 
 class Point:
-  def __init__(self,x:float,y:float,color:str = "lime") -> None:
+  def __init__(self,x:float,y:float,color:str = "lime",FeatureList:List = []) -> None:
     if type(color)==int:
-      self.color = colors[color]
-    else:
-      self.color:str = color
+      color = colors[color]
     self.x:float = x
     self.y:float = y
+    self.features = [color,*FeatureList]
   
   def distance(self,version:int,point:Point):
     dist = [self.euclid,self.manhattan,self.chebyshev,self.hammingManhattan,self.hammingEuclid,self.hammingChebyshev]
@@ -56,6 +55,3 @@ def dif(i:list,j:list):
   for l,L in zip(i,j):
     Dif += l != L
   return Dif
-
-k = Point(1,2)
-t = Point(3,4) 

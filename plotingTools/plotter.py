@@ -51,7 +51,7 @@ def plot_line():
 
 def plotn(types:List[Point],line:bool=False)->None:
   for j in types:
-    plt.scatter(j.x,j.y, color = j.color)
+    plt.scatter(j.x,j.y, color = j.features[0])
   if line:
     plot_line()
   plt.show()
