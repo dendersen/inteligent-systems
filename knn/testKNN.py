@@ -39,3 +39,4 @@ def quick():
   t.testK(range(1,19,2))
   a = t.visualizeK()
   t.testDist(a+2)
+  t.visualizeAll(7,6,True)
