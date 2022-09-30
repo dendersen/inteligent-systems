@@ -144,7 +144,7 @@ class Knn:
     print(k)
     for i in range(0,len(Point(0,0).dist)):
         self.calcD.append(self.buildInternalKNN(k,i))
-    plot1(self.calcD)
+    plot1(self.calcD,"afstands funktion",True)
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
