@@ -34,16 +34,15 @@ def plot1 (type1:List[Point]) -> None:
   y = [*(i.y for i in type1)]
   #----------------
   #Plot size limit
-  plt.xlim(min(x)-2, max(x)+2)
-  plt.ylim(min(y)-2, max(y)+2)
-  plt.grid()
+  # plt.xlim(min(x)-2, max(x)+2)
+  # plt.ylim(min(y)-2, max(y)+2)
+  # plt.grid()
   #----------------
   #Makes lines between each k-point
   plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=(100/(max(x)-min(y))), color="blue", markerfacecolor="pink")
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 
-colors = ("aqua","green","lime","plum","grey","purple","salmon","black","khaki","sienna","blue","lavender","chartresue","lightgreen","teal","brown","lightblue","tan","chocolate","tomato","coral","magenta","turquoise","crimson","maroon","violet","cyan","navy","wheat","darkblue","olive","darkgreen","orange","yellow","fuchsia","orangered","pink")
 def plot_line():
   x_plot = arange(0.05,25,0.0001)   # start,stop,step
   y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
