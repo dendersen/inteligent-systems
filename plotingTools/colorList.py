@@ -1,13 +1,10 @@
 from random import seed,shuffle
 
 colors = [
-  "aquamarine",
-  "azure",
   "beige",
   "black",
   "blue",
   "brown",
-  "chocolate",
   "coral",
   "ivory",
   "crimson",
@@ -17,21 +14,14 @@ colors = [
   "fuchsia",
   "gold",
   "goldenrod",
-  "green",
   "grey",
   "indigo",
-  "aqua",
   "khaki",
-  "lavender",
   "lightblue",
   "lightgreen",
-  "lime",
-  "magenta",
   "maroon",
-  "navy",
   "olive",
   "orange",
-  "orangered",
   "orchid",
   "pink",
   "plum",
@@ -41,13 +31,9 @@ colors = [
   "sienna",
   "silver",
   "tan",
-  "teal",
-  "tomato",
-  "turquoise",
   "violet",
-  "wheat",
   "yellow",
-  "yellowgreen",
 ]
 
 shuffle(colors)
+
