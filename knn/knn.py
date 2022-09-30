@@ -27,7 +27,7 @@ class Knn:
   def distance(self,item0:Point,item1:Point) -> int:
     return item0.distance(self.distanceCalcID,item1)#calls the distance method contained in the class point
   
-  def runData(self,rang:range = -1) -> List[List[Point]]:#runs the algorithm through all unkown points
+  def runData(self,rang:range = -1):#runs the algorithm through all unkown points
     if rang == -1:
       rang = range(0,len(self.data))#in case a range i not given the program will run through all points
     
