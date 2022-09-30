@@ -23,6 +23,7 @@ class Knn:
     self.error = [False]*(len(self.solution))
     #self.solution[0] is the answer to self.data [0]
     self.calcK:List[Point] = []#constains error numbers for different solutions
+    self.calcD:List[Point] = []#constains error numbers for different solutions
   
   def distance(self,item0:Point,item1:Point) -> int:
     return item0.distance(self.distanceCalcID,item1)#calls the distance method contained in the class point
@@ -130,15 +131,29 @@ class Knn:
       self.calcK.append(Point(i,e))#saves the errors
     return self.calcK
   
-  def visualizeK(self)->None:
+  def visualizeK(self)->int:
     if len(self.calcK) < 1:
       print("testk() has not run, checking stardard k's")
       self.testK(-1)
     plot1(self.calcK)
+    return min(self.calcK, key = self.visKey).x
   
+  def visKey(self,point:Point):
+    return point.y
+
   def visualizeSolution(self)->None:
     solv = self.ori
     
     for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
       i.features[0] = j
     plotn(solv,True)
+
+  def testDist(self,k:int = 5):
+    print(k)
+    for i in range(0,len(Point(0,0).dist)):
+      k_nn = Knn([*self.ori.copy()],k,i)#creates a new knn algorithm with a different distance formula
+      k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
+      k_nn.runData()#runs the algorithm
+      e = k_nn.errorRate()#checks the number of errors
+      self.calcD.append(Point(i,e))#saves the errors
+    plot1(self.calcD)

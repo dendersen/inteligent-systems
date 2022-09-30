@@ -12,10 +12,10 @@ class Point:
     self.x:float = x
     self.y:float = y
     self.features = [color,*FeatureList]
+    self.dist = [self.euclid,self.manhattan,self.chebyshev,self.hammingManhattan,self.hammingEuclid,self.hammingChebyshev]
   
   def distance(self,version:int,point:Point):
-    dist = [self.euclid,self.manhattan,self.chebyshev,self.hammingManhattan,self.hammingEuclid,self.hammingChebyshev]
-    return dist[version](point)
+    return self.dist[version](point)
   
   def euclid(self,point:Point)->float:
     return sqrt((self.x-point.x)**2 + (self.y-point.y)**2)

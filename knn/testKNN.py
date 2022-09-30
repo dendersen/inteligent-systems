@@ -26,15 +26,16 @@ dataKnown1 = [Point(1,1),Point(3,3),Point(5,7),Point(15,46),Point(1,41),Point(3,
 dataKnown2 = [Point(1,0),Point(3,0),Point(5,4),Point(15,15),Point(14,14),Point(13,4),Point(12,26),Point(7,6),Point(7,1),Point(22,40)]
 def quick():
   solution = solutionGen(dataStart)
-  k = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())])
-  k.UpdateDataset(dataStart.copy(),solution.copy())
-  k.runData()
-  k.visualize()
-  k.visualizeSolution()
-  print(k.errorRate())
+  # k = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())])
+  # k.UpdateDataset(dataStart.copy(),solution.copy())
+  # k.runData()
+  # k.visualize()
+  # k.visualizeSolution()
+  # print(k.errorRate())
   
   
   t = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],1,1)
   t.UpdateDataset(dataStart.copy(),solution.copy())
   t.testK(range(1,19,2))
-  t.visualizeK()
+  a = t.visualizeK()
+  t.testDist(a)
