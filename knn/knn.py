@@ -2,7 +2,7 @@ from plotingTools.point import Point as Point
 from plotingTools.plotter import plotn,plot1
 from plotingTools.colorList import colors
 import knn.distanceStorage as dist
-from typing import List
+from typing import List, Union
 
 
 class Knn:
@@ -13,9 +13,9 @@ class Knn:
     self.distanceCalcID = distID#which formula should be used to calculate distance
     # self.numberOfTypes = len(knownDataType) #no longer used
   
-  def UpdateDataset(self,data:List[Point],solution:List[str] = "lime")->None:
-    if solution == "lime":
-      solution = ["lime"]*(len(data))
+  def UpdateDataset(self,data:List[Point],solution:Union[List[str], str] = "lime")->None:
+    if type(solution) == str:
+      solution = [solution]*(len(data))
       #in case no solution is give generates a buffer that is not meant to be read but can be read as a way to know results
     
     self.data = data #data pieces containing a list of points
