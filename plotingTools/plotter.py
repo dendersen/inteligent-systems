@@ -75,6 +75,11 @@ def plot3D(points:List[Point])->None:
   y = [*(i.y for i in points)]
   z = [*(i.z for i in points)]
   
+  plt.xlabel('x-axe')
+  plt.ylabel('y-axe')
+  plt.zlabel('z-axe')
+  plt.grid()
+  
   ax.scatter3D(x,y,z)
   plt.show()
   pass
