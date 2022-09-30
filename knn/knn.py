@@ -2,8 +2,8 @@ from plotingTools.point import Point as Point
 from plotingTools.plotter import plotn,plot1
 from plotingTools.colorList import colors
 import knn.distanceStorage as dist
-from typing import List
-
+from typing import List, Union
+from itertools import count
 
 class Knn:
   def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0) -> None:
@@ -13,9 +13,9 @@ class Knn:
     self.distanceCalcID = distID#which formula should be used to calculate distance
     # self.numberOfTypes = len(knownDataType) #no longer used
   
-  def UpdateDataset(self,data:List[Point],solution:List[str] = "lime")->None:
-    if solution == "lime":
-      solution = ["lime"]*(len(data))
+  def UpdateDataset(self,data:List[Point],solution:Union[List[str], str] = "lime")->None:
+    if type(solution) == str:
+      solution = [solution]*(len(data))
       #in case no solution is give generates a buffer that is not meant to be read but can be read as a way to know results
     
     self.data = data #data pieces containing a list of points
@@ -27,31 +27,28 @@ class Knn:
   def distance(self,item0:Point,item1:Point) -> int:
     return item0.distance(self.distanceCalcID,item1)#calls the distance method contained in the class point
   
-  def runData(self,rang:range = -1) -> List[List[Point]]:#runs the algorithm through all unkown points
-    if rang == -1:
-      rang = range(0,len(self.data))#in case a range i not given the program will run through all points
-    
-    for i in rang: 
-      test = self.data[i] #datapoint being checked
-      
-      distances:List[dist.Distance] = []
-      for j in self.referencePoints:
-        if j != test:
-          distances.append(dist.Distance(j,self.distance(test,j)))#calculate the distance
+  def runData(self):#runs the algorithm through all unkown points
+
+    for test in self.data: #datapoint being checked
+      distances:List[dist.Distance] = self.calculateDistance(test)
       
       distances.sort(key=dist.checkDist)
       
-      cc = [l.point.color for j,l in zip(range(0,self.k),distances)]#farverne af de nærme punkter
+      feat = []
+      for i,ll in zip (count(),test.features):
+        cc = [l[1].point.features[i] for l in zip(range(0,self.k),distances)]#farverne af de nærmeste punkter
+        
+        c = self.activeFeatures(cc)
+        Dist = [[cc.count(j),j] for j in c]#antal af hver farve
+        Dist.sort(key=dist.colCheck)
+        feat.append(Dist[0][1])
       
-      Dist = [[cc.count(j),j] for j in colors]#antal af hver farve
-      Dist.sort(key=dist.colCheck)
-      
-      test.color = Dist[len(Dist)-1][1]#saves colored point
+      test.features = feat
       self.referencePoints.append(test)
-      
+
+
+
     # return self.referencePoints#returns the points of each type
-
-
       # test.color = colors[cc[1]]#saves colored point
       # self.referencePoints.append(test)
       # colorCheck:List[int] = [0] * len(colors)#typing list (color based)
@@ -91,13 +88,33 @@ class Knn:
     #   self.referencePoints[s].append(self.data[i])
     #   self.error[i] = s == self.solution
   
+  def activeFeatures(self, cc) -> List[str]:
+    for i in cc:
+      col = []
+      t = False
+      for j in col:
+        if j == i:
+          t = True
+          break
+      if not t:
+        col.append(i)
+    return col
+
+  def calculateDistance(self, test:Point) -> List[dist.Distance]:
+    distances:List[dist.Distance] = []
+    
+    for j in self.referencePoints:
+      if j != test:
+        distances.append(dist.Distance(j,self.distance(test,j)))#calculate the distance
+    return distances
+  
   def visualize(self) -> None:#plots true and false as different items in a plot
     plotn(self.referencePoints)
   
   def errorRate(self)->int:#counts the number of True in error array
     e=0
     for i,j in zip(self.referencePoints[::-1],self.solution[::-1]):
-      if i.color != j:
+      if i.features[0] != j:
         e+=1
     return e
   
@@ -123,5 +140,5 @@ class Knn:
     solv = self.ori
     
     for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
-      i.color = j
+      i.features[0] = j
     plotn(solv,True)

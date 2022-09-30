@@ -1,4 +1,4 @@
-from random import seed,shuffle
+from random import shuffle
 
 colors = [
   "beige",
@@ -34,6 +34,4 @@ colors = [
   "violet",
   "yellow",
 ]
-
 shuffle(colors)
-
