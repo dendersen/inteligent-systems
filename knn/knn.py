@@ -155,7 +155,7 @@ class Knn:
   def __visAll(self,Ksearch:range,DistSearch:range):
     for i in Ksearch:
       for j in DistSearch:
-        self.calcA.append(self.buildInternalKNN(i,j))
+        self.calcA.append(self.buildInternalKNN(i,j,3))
     plot3D(self.calcA)
 
   def buildInternalKNN(self, k, dist, simple = 0):
