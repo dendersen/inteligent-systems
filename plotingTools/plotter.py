@@ -29,20 +29,29 @@ def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   plt.show()
 
 
-def plot1 (type1:List[Point]) -> None:
+def plot1 (type1:List[Point],showCordinate:bool = False, titel:str = 'Presition ud fra given k værdi (k-værdi angivet over punkt)', xlabel:str='K værdi', ylabel:str = 'Afvigelse fra facit (antal fejl)') -> None:
   x = [*(i.x for i in type1)]
   y = [*(i.y for i in type1)]
   #----------------
   #Plot visiuals
-  plt.xlabel('K værdi')
-  plt.ylabel('Afvigelse fra facit (antal fejl)')
+  plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
+  plt.title(titel)
+  #----------------
+  #Plot size limit
+  plt.xlim(min(x)-3, max(x)+3)
+  plt.ylim(min(y)-3, max(y)+3)
+  plt.grid()
   #----------------
   #Makes lines between each k-point
-  fig, ax = plt.subplots()
-  plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=(100/(max(x)-min(y))), color="blue", markerfacecolor="pink")
+  plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=((max(x)+max(y))/4), color="blue", markerfacecolor="pink")
   #Viser k-værdi for punkt
-  for i,txt in enumerate(x):
-    ax.annotate(txt,([*(i.x for i in type1)],[*(i.y for i in type1)]))
+  for x,y in zip([*(i.x for i in type1)],[*(i.y for i in type1)]):
+    if showCordinate:
+      label = "{:.2f}".format(y)
+    else:
+      label = "{:.2f}".format(x)
+    plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,8),ha='center')
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 

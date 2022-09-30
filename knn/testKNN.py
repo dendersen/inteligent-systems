@@ -38,4 +38,4 @@ def quick():
   t.UpdateDataset(dataStart.copy(),solution.copy())
   t.testK(range(1,19,2))
   a = t.visualizeK()
-  t.testDist(a)
+  t.testDist(a+2)

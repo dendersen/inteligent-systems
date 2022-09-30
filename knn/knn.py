@@ -156,4 +156,4 @@ class Knn:
       k_nn.runData()#runs the algorithm
       e = k_nn.errorRate()#checks the number of errors
       self.calcD.append(Point(i,e))#saves the errors
-    plot1(self.calcD)
+    plot1(self.calcD,"afstands funktion",True)
