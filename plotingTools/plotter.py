@@ -15,7 +15,7 @@ def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   y = (*(i.y for i in Type1),*( i.y for i in Type2))
   #----------------
   #Plot size limit
-  plt.xlim(min(x)-2, max(x)+2)
+  plt.xlim(min(x), max(x))
   plt.ylim(min(y)-2, max(y)+2)
   plt.grid()
   #----------------
@@ -66,3 +66,5 @@ def plotn(types:List[Point],line:bool=False)->None:
   if line:
     plot_line()
   plt.show()
+
+def plot3D()->None:
