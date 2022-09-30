@@ -33,13 +33,16 @@ def plot1 (type1:List[Point]) -> None:
   x = [*(i.x for i in type1)]
   y = [*(i.y for i in type1)]
   #----------------
-  #Plot size limit
-  # plt.xlim(min(x)-2, max(x)+2)
-  # plt.ylim(min(y)-2, max(y)+2)
-  # plt.grid()
+  #Plot visiuals
+  plt.xlabel('K værdi')
+  plt.ylabel('Afvigelse fra facit (antal fejl)')
   #----------------
   #Makes lines between each k-point
+  fig, ax = plt.subplots()
   plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=(100/(max(x)-min(y))), color="blue", markerfacecolor="pink")
+  #Viser k-værdi for punkt
+  for i,txt in enumerate(x):
+    ax.annotate(txt,([*(i.x for i in type1)],[*(i.y for i in type1)]))
   #printer et plot over hvordan ændringer i k pævirker antal korekte
   plt.show()
 
