@@ -1,3 +1,4 @@
+from re import X
 import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
@@ -44,7 +45,7 @@ def plot1 (type1:List[Point],showCordinate:bool = False, titel:str = 'Presition 
   plt.grid()
   #----------------
   #Makes lines between each k-point
-  plt.plot([*(i.x for i in type1)],[*(i.y for i in type1)], "o--", linewidth=5, markersize=((max(x)+max(y))/4), color="blue", markerfacecolor="pink")
+  plt.plot(x,y, "o--", linewidth=5, markersize=((max(x)+max(y))/4), color="blue", markerfacecolor="pink")
   #Viser k-værdi for punkt
   for x,y in zip([*(i.x for i in type1)],[*(i.y for i in type1)]):
     if showCordinate:
@@ -67,4 +68,13 @@ def plotn(types:List[Point],line:bool=False)->None:
     plot_line()
   plt.show()
 
-def plot3D()->None:
+def plot3D(points:List[Point])->None:
+  ax = plt.axes(projection='3d')
+  #point data
+  x = [*(i.x for i in points)]
+  y = [*(i.y for i in points)]
+  z = [*(i.z for i in points)]
+  
+  ax.scatter3D(x,y,z)
+  plt.show()
+  pass

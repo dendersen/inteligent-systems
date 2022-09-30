@@ -143,8 +143,8 @@ class Knn:
   def testDist(self,k:int = 5):
     print(k)
     for i in range(0,len(Point(0,0).dist)):
-        self.calcD.append(self.buildInternalKNN(k,i))
-    plot1(self.calcD,"afstands funktion",True)
+        self.calcD.append(self.buildInternalKNN(k,i,1))
+    plot1(self.calcD,True,'Presition med k værdien ' + str(k) + ' (k-værdi angivet over punkt)',"afstands funktion")
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
@@ -158,10 +158,14 @@ class Knn:
         self.calcA.append(self.buildInternalKNN(i,j))
     plot3D(self.calcA)
 
-  def buildInternalKNN(self, k, dist):
+  def buildInternalKNN(self, k, dist, simple = 0):
       k_nn = Knn([*self.ori.copy()],k,dist)#creates a new knn algorithm with a new k and dist
       k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
       k_nn.runData()#runs the algorithm
       e = k_nn.errorRate()#checks the number of errors
-      return(Point(k,dist,"Lime",[],e))#returns the errors
-
+      if simple == 0:
+        return (Point(k,e,"Lime",[],dist))#returns the errors
+      if simple == 1:
+        return (Point(dist,e,"Lime",[],k))
+      if simple == 2:
+        return (Point(k,dist,"Lime",[],e))
