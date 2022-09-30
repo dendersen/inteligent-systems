@@ -6,9 +6,10 @@ class Point:
   pass
 
 class Point:
-  def __init__(self,x:float,y:float,color:str = "lime",FeatureList:List = []) -> None:
+  def __init__(self,x:float,y:float,color:str = "lime",FeatureList:List = [],z:int=0) -> None:
     if type(color)==int:
       color = colors[color]
+    self.z = z
     self.x:float = x
     self.y:float = y
     self.features = [color,*FeatureList]

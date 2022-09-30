@@ -1,5 +1,5 @@
 from plotingTools.point import Point as Point
-from plotingTools.plotter import plotn,plot1
+from plotingTools.plotter import plotn,plot1,plot3D
 from plotingTools.colorList import colors
 import knn.distanceStorage as dist
 from typing import List, Union
@@ -24,12 +24,12 @@ class Knn:
     #self.solution[0] is the answer to self.data [0]
     self.calcK:List[Point] = []#constains error numbers for different solutions
     self.calcD:List[Point] = []#constains error numbers for different solutions
+    self.calcA:List[Point] = []#constains error numbers for different solutions
   
   def distance(self,item0:Point,item1:Point) -> int:
     return item0.distance(self.distanceCalcID,item1)#calls the distance method contained in the class point
   
-  def runData(self):#runs the algorithm through all unkown points
-
+  def runData(self) -> None:#runs the algorithm through all unkown points
     for test in self.data: #datapoint being checked
       distances:List[dist.Distance] = self.calculateDistance(test)
       
@@ -46,14 +46,10 @@ class Knn:
       
       test.features = feat
       self.referencePoints.append(test)
-
-
-
     # return self.referencePoints#returns the points of each type
       # test.color = colors[cc[1]]#saves colored point
       # self.referencePoints.append(test)
       # colorCheck:List[int] = [0] * len(colors)#typing list (color based)
-
       # for j in range(0,self.k):
       #    for I,l in enumerate(colors):
       #     if distances[j].point.color == l:#finds nearest color 
@@ -70,7 +66,6 @@ class Knn:
       
       # dist = [[cc.count(j),j] for j in colors]
       # dist.sort()
-
     #   distType:List[List[int]] = [[]*self.numberOfTypes]*self.numberOfTypes#saves all types of points
     #   for l in range(0,self.numberOfTypes):
     #     for j in self.referencePoints[l]:
@@ -88,6 +83,7 @@ class Knn:
     #         T[s]
     #   self.referencePoints[s].append(self.data[i])
     #   self.error[i] = s == self.solution
+    return
   
   def activeFeatures(self, cc) -> List[str]:
     for i in cc:
@@ -124,11 +120,7 @@ class Knn:
       rangeOfK = range(1,8,2)
     
     for i in rangeOfK:
-      k_nn = Knn([*self.ori.copy()],i)#creates a new knn algorithm with a new k
-      k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
-      k_nn.runData()#runs the algorithm
-      e = k_nn.errorRate()#checks the number of errors
-      self.calcK.append(Point(i,e))#saves the errors
+      self.calcK.append(self.buildInternalKNN(i,self.distanceCalcID))
     return self.calcK
   
   def visualizeK(self)->int:
@@ -151,9 +143,25 @@ class Knn:
   def testDist(self,k:int = 5):
     print(k)
     for i in range(0,len(Point(0,0).dist)):
-      k_nn = Knn([*self.ori.copy()],k,i)#creates a new knn algorithm with a different distance formula
+        self.calcD.append(self.buildInternalKNN(k,i))
+    plot1(self.calcD,"afstands funktion",True)
+
+  def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
+    if evenK:
+      self.__visAll(range(1,Ksearch+1),range(0,DistSearch+1))
+    else:
+      self.__visAll(range(1,Ksearch+1,2),range(0,DistSearch+1))
+  
+  def __visAll(self,Ksearch:range,DistSearch:range):
+    for i in Ksearch:
+      for j in DistSearch:
+        self.calcA.append(self.buildInternalKNN(i,j))
+    plot3D(self.calcA)
+
+  def buildInternalKNN(self, k, dist):
+      k_nn = Knn([*self.ori.copy()],k,dist)#creates a new knn algorithm with a new k and dist
       k_nn.UpdateDataset(self.data.copy(),self.solution.copy())#provides the algorithem with data
       k_nn.runData()#runs the algorithm
       e = k_nn.errorRate()#checks the number of errors
-      self.calcD.append(Point(i,e))#saves the errors
-    plot1(self.calcD,True,'Presition ud fra k værdien ' + str(k) + ' (Antal fejl angivet over punkt)', "afstands funktion")
+      return(Point(k,dist,"Lime",[],e))#returns the errors
+
