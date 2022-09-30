@@ -148,9 +148,9 @@ class Knn:
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
-      self.__visAll(range(1,Ksearch+1),range(0,DistSearch+1))
+      self.__visAll(range(1,Ksearch+1),range(0,DistSearch))
     else:
-      self.__visAll(range(1,Ksearch+1,2),range(0,DistSearch+1))
+      self.__visAll(range(1,Ksearch+1,2),range(0,DistSearch))
   
   def __visAll(self,Ksearch:range,DistSearch:range):
     for i in Ksearch:
