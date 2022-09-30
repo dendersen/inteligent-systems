@@ -1,5 +1,6 @@
-colors = (
-  "aqua",
+from random import seed,shuffle
+
+colors = [
   "aquamarine",
   "azure",
   "beige",
@@ -8,6 +9,7 @@ colors = (
   "brown",
   "chocolate",
   "coral",
+  "ivory",
   "crimson",
   "cyan",
   "darkblue",
@@ -18,7 +20,7 @@ colors = (
   "green",
   "grey",
   "indigo",
-  "ivory",
+  "aqua",
   "khaki",
   "lavender",
   "lightblue",
@@ -46,4 +48,6 @@ colors = (
   "wheat",
   "yellow",
   "yellowgreen",
-)
+]
+
+shuffle(colors)
