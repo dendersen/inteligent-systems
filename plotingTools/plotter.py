@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
 from plotingTools.point import Point
-
+from knn import knn
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #type1[0] giver liste over x af type 1
@@ -61,11 +61,24 @@ def plot_line():
   y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
   return plt.plot(x_plot,y_plot)
 
-def plotn(types:List[Point],line:bool=False)->None:
+def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   for j in types:
     plt.scatter(j.x,j.y, color = j.features[0])
   if line:
     plot_line()
+  #labels
+  plt.xlabel("x-value")
+  plt.ylabel("y-value")
+  plt.title(kvalue)
+  #----------------
+  #Viser ekstra label for punkter
+  # x = [*(i.x for i in types)]
+  # y = [*(i.y for i in types)]
+  # for x,y in zip(x,y):
+  #   label = "cat"
+  #   plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,8),ha='center')
+  #----------------
+  #printer plot
   plt.show()
 
 def plot3D(points:List[Point])->None:

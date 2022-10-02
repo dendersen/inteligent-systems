@@ -138,13 +138,13 @@ class Knn:
     
     for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
       i.features[0] = j
-    plotn(solv,True)
+    plotn(solv,True,"Teoretisk rigtig løsning")
 
   def testDist(self,k:int = 5):
     print(k)
     for i in range(0,len(Point(0,0).dist)):
         self.calcD.append(self.buildInternalKNN(k,i,1))
-    plot1(self.calcD,True,'Presition med k værdien ' + str(k) + ' (k-værdi angivet over punkt)',"afstands funktion")
+    plot1(self.calcD,True,'Presition med k værdien ' + str(k) + ' (Antal fejl angivet over punkt)',"afstands funktion")
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
