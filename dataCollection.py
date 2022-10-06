@@ -15,7 +15,7 @@ for i in loadFile("dataFromSheet","txt").split("\n"):
     if float(j[0] == 0):
       j[0]+= 1e-10
     if float(j[1] == 0):
-      j[1]+= 1e-10
+      j[1 ]+= 1e-10
     p = Point(
       float(j[0]),
       float(j[1]),
