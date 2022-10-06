@@ -1,3 +1,4 @@
+from itertools import count
 from re import X
 import matplotlib.pyplot as plt
 from typing import List
@@ -57,7 +58,7 @@ def plot_line():
   return plt.plot(x_plot,y_plot)
 
 def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
-  for j in types:
+  for j,l in zip(types,count()):
     plt.scatter(j.x,j.y, color = j.features[0])
     label = ""
     try:
@@ -65,7 +66,8 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
     except:
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
-    plt.pause(0.01)
+    if(l%4==0):
+      plt.pause(1e-10)
   if line:
     plot_line()
   #labels
