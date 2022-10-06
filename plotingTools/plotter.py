@@ -10,7 +10,7 @@ def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   y = (*(i.y for i in Type1),*( i.y for i in Type2))
   #----------------
   #Plot size limit
-  plt.xlim(min(x), max(x))
+  plt.xlim(min(x)-2, max(x)+2)
   plt.ylim(min(y)-2, max(y)+2)
   plt.grid()
   #----------------
@@ -39,7 +39,7 @@ def plot1 (type1:List[Point],showCordinate:bool = False, titel:str = 'Presition 
   plt.grid()
   #----------------
   #Makes lines between each k-point
-  plt.plot(x,y, "o--", linewidth=5, markersize=((max(x)+max(y))/4), color="blue", markerfacecolor="pink")
+  plt.plot(x,y, "o--", linewidth=5, markersize=(min(min(x)+min(y))/4), color="blue", markerfacecolor="pink")
   #Viser k-værdi for punkt
   for x,y in zip([*(i.x for i in type1)],[*(i.y for i in type1)]):
     if showCordinate:
