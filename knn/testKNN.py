@@ -27,7 +27,7 @@ dataKnown1 = [Point(1,1),Point(3,3),Point(5,7),Point(15,46),Point(1,41),Point(3,
 dataKnown2 = [Point(1,0),Point(3,0),Point(5,4),Point(15,15),Point(14,14),Point(13,4),Point(12,26),Point(7,6),Point(7,1),Point(22,40)]
 def quick():
   solution = solutionGen(dataStart)
-  k = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],1)
+  k = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],3)
   k.UpdateDataset(dataStart.copy(),solution.copy())
   k.runData()
   k.visualize()
