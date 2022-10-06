@@ -10,5 +10,3 @@ def randomPoints(numberOfPoints:int,maxX,minX,maxY,minY):
     random()*(maxY-minY)+minY)
     points.append(p)
   return(points)
-
-randomPoints(10,1000,0,1000,0)
