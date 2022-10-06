@@ -46,7 +46,7 @@ def quick():
   t.UpdateDataset(dataStart.copy(),solution.copy())
   t.testK(range(1,19,2))
   a = t.visualizeK()
-  t.testDist(a+2)
+  t.testDist(a)
   t.visualizeAll(7,6,True)
 
 def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall:float,wide:float):
@@ -54,17 +54,17 @@ def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall
   unknown = randomPoints(numberOfUnkownPoints,wide,origin,tall,origin)
   solution = solutionGen(unknown)
   
-  k = Knn(soll(known),1)
+  k = Knn(soll(known),3,1)
   k.UpdateDataset(unknown,solution)
   k.runData()
   k.visualize()
-  k.visualizeSolution()
+  # k.visualizeSolution()
   print(k.errorRate())
   
   
-  t = Knn(soll(known),1,1)
+  t = Knn(soll(known))
   t.UpdateDataset(unknown,solution)
   t.testK(range(1,19,2))
   a = t.visualizeK()
-  t.testDist(a+2)
+  t.testDist(a)
   t.visualizeAll(7,6,True)
