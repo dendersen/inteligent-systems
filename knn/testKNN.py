@@ -3,6 +3,7 @@ from typing import List
 from plotingTools.colorList import colors
 from knn.knn import Knn
 from plotingTools.point import Point
+from plotingTools.randomData import randomPoints
 
 def solutionGen(data:List[Point],a:float = 0.2,b:float=-1.6,c:float=-0.3):
   sol = []
@@ -36,6 +37,26 @@ def quick():
   
   t = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],1,1)
   t.UpdateDataset(dataStart.copy(),solution.copy())
+  t.testK(range(1,19,2))
+  a = t.visualizeK()
+  t.testDist(a+2)
+  t.visualizeAll(7,6,True)
+
+def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall:float,wide:float):
+  known = randomPoints(numberOfKnownPoints,wide,origin,tall,origin)
+  unknown = randomPoints(numberOfUnkownPoints,wide,origin,tall,origin)
+  solution = solutionGen(unknown)
+  
+  k = Knn(soll(known),1)
+  k.UpdateDataset(unknown,solution)
+  k.runData()
+  k.visualize()
+  k.visualizeSolution()
+  print(k.errorRate())
+  
+  
+  t = Knn(soll(known),1,1)
+  t.UpdateDataset(unknown,solution)
   t.testK(range(1,19,2))
   a = t.visualizeK()
   t.testDist(a+2)
