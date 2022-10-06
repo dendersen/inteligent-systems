@@ -76,7 +76,7 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
   plt.title(kvalue)
   #----------------
   #printer plot
-  sys.exit(plt.show())
+  plt.show()
 
 def plot3D(points:List[Point])->None:
   ax = plt.axes(projection='3d')
