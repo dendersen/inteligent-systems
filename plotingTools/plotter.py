@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
 from plotingTools.point import Point
-from knn import knn
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #type1[0] giver liste over x af type 1
