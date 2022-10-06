@@ -18,8 +18,8 @@ def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   plt.style.use("seaborn-whitegrid")
   #----------------
   #Makes point plot
-  plt.plot([*(i.x for i in Type1)], [*(i.y for i in Type1)], "x", markersize=((max(x)+max(y))/4), markeredgecolor="red")
-  plt.plot([*(i.x for i in Type2)], [*(i.y for i in Type2)], "o", markersize=((max(x)+max(y))/4), markeredgecolor="black", markerfacecolor="green")
+  plt.plot([*(i.x for i in Type1)], [*(i.y for i in Type1)], "x", markeredgecolor="red")
+  plt.plot([*(i.x for i in Type2)], [*(i.y for i in Type2)], "o", markeredgecolor="black", markerfacecolor="green")
   #printer et plot over hvor de to typer er
   plt.show()
 
@@ -39,7 +39,7 @@ def plot1 (type1:List[Point],showCordinate:bool = False, titel:str = 'Presition 
   plt.grid()
   #----------------
   #Makes lines between each k-point
-  plt.plot(x,y, "o--", linewidth=5, markersize=(min(min(x)+min(y))/4), color="blue", markerfacecolor="pink")
+  plt.plot(x,y, "o--", linewidth=5, color="blue", markerfacecolor="pink")
   #Viser k-værdi for punkt
   for x,y in zip([*(i.x for i in type1)],[*(i.y for i in type1)]):
     if showCordinate:
