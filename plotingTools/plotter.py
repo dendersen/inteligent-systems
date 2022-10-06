@@ -66,7 +66,7 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
     except:
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
-    if(l%4==0):
+    if(l%40==0):
       plt.pause(1e-10)
   if line:
     plot_line()

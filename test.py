@@ -1,6 +1,6 @@
 from knn.testKNN import quick, quickRand
 while True:
-  quickRand(100,200,0,120,25)
+  quickRand(200,100,0,120,25)
 
   if input ("done") == "yes":
     break
