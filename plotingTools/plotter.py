@@ -59,7 +59,7 @@ def plot_line():
 def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   for j in types:
     plt.scatter(j.x,j.y, color = j.features[0])
-    plt.pause(0.001)
+    plt.pause(0.01)
   if line:
     plot_line()
   #labels
