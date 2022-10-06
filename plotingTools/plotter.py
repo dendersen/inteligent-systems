@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
 from plotingTools.point import Point
+import sys
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #Combine values for x and y
@@ -58,6 +59,7 @@ def plot_line():
 def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   for j in types:
     plt.scatter(j.x,j.y, color = j.features[0])
+    plt.pause(0.001)
   if line:
     plot_line()
   #labels
@@ -73,7 +75,7 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
   #   plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,8),ha='center')
   #----------------
   #printer plot
-  plt.show()
+  sys.exit(plt.show())
 
 def plot3D(points:List[Point])->None:
   ax = plt.axes(projection='3d')
