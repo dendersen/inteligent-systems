@@ -58,7 +58,7 @@ def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall
   k.UpdateDataset(unknown,solution)
   k.runData()
   k.visualize()
-  # k.visualizeSolution()
+  k.visualizeSolution()
   print(k.errorRate())
   
   
