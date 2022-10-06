@@ -59,6 +59,12 @@ def plot_line():
 def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   for j in types:
     plt.scatter(j.x,j.y, color = j.features[0])
+    label = ""
+    try:
+      label = j.features[1]
+      plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
+    except:
+      plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
     plt.pause(0.01)
   if line:
     plot_line()
@@ -66,13 +72,6 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
   plt.xlabel("x-value")
   plt.ylabel("y-value")
   plt.title(kvalue)
-  #----------------
-  #Viser ekstra label for punkter
-  # x = [*(i.x for i in types)]
-  # y = [*(i.y for i in types)]
-  # for x,y in zip(x,y):
-  #   label = "cat"
-  #   plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,8),ha='center')
   #----------------
   #printer plot
   sys.exit(plt.show())
