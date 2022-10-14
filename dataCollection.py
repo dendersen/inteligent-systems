@@ -2,14 +2,13 @@ from typing import List
 from plotingTools.point import Point
 
 
-def loadFile(fileName: str, fileExtention: str):#finder et text dokument og giver en string
+def loadFile(fileName: str, fileExtention: str)->str:#finder et text dokument og giver en string
   with open(fileName + "." + fileExtention) as f:
     text = f.read()
   return text
 
 data:List[Point] = []
-
-for i in loadFile("dataFromSheet","txt").split("\n"):
+for i in loadFile("testData/dataFromSheet","txt").split("\n"):
   j = i.split(",")
   if(j[0].isdecimal(),j[2].isdecimal(),j[3].isdecimal()):
     if float(j[0] == 0):
@@ -23,3 +22,17 @@ for i in loadFile("dataFromSheet","txt").split("\n"):
       [3]
     )
     data.append(p)
+
+def kommaSeperatedReader(name:str,extension:str):
+  out = []
+  for i in loadFile(name,extension).split("\n"):
+    temp=[]
+    for j in i.split(","):
+      if j.isdecimal():
+        print("read succes")
+        temp.append(float(j))
+      else:
+        # print(f"error, cannot read   {j}   will write {-1}")
+        temp.append(-1)
+    out.append(temp)
+  return out

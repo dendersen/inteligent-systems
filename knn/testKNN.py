@@ -1,6 +1,7 @@
 from random import randint
 from typing import List
 from sklearn.datasets import make_moons
+from dataCollection import kommaSeperatedReader
 
 from plotingTools.colorList import colors
 from knn.knn import Knn
@@ -62,18 +63,18 @@ def quickData(numberOfPoints = 500,percentKnown:float = 0.5,Randomnes = 0.17):
     index = randint(0,len(xy)-1)
     a = xy.pop(index)
     unKnownList.append(Point(a[0],a[1]))
-    solution.append(colorID.pop(index))
+    solution.append(colors[colorID.pop(index)])
   knownList = [Point(i[0],i[1],color=colors[j]) for i,j in zip(xy,colorID)]
   
   a = Knn(knownList)
   a.UpdateDataset(unKnownList,solution)
   a.runData()
   a.visualize()
-  a.testK(range(1,100,2))
+  a.testK(range(1,14,2))
   a.visualizeSolution()
-  a.visualizeK()
+  b = a.visualizeK()
   a.testDist()
-  a.visualizeAll()
+  a.visualizeAll(range(1,14,2))
 
 def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall:float,wide:float):
   known = randomPoints(numberOfKnownPoints,wide,origin,tall,origin)
@@ -94,3 +95,13 @@ def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall
   a = t.visualizeK()
   t.testDist(a)
   t.visualizeAll(7,6,True)
+
+def quickTrueData():
+  known = kommaSeperatedReader("testData\OccupiedTrain","csv")
+  unKnown = kommaSeperatedReader("testData\OccupiedTest","csv")
+  knownPoints = [Point(i[0],
+  i[1],
+  i[-1]) for i in known]
+  unKnownPoints = [Point(i[0],i[1]) for i in unKnown]
+  a = Knn(knownPoints)
+  a.UpdateDataset(unKnownPoints,[i[-1] for i in unKnown])
