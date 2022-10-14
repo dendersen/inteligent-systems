@@ -6,12 +6,13 @@ from typing import List, Union
 from itertools import count
 
 class Knn:
-  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0) -> None:
+  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0,solutionKnown:bool = False) -> None:
     self.k = k
     self.ori:List[Point] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
     self.referencePoints:List[Point] = knownDataType#contains all calculated points of differentTypes
     self.distanceCalcID = distID#which formula should be used to calculate distance
     # self.numberOfTypes = len(knownDataType) #no longer used
+    self.line = solutionKnown
   
   def UpdateDataset(self,data:List[Point],solution:Union[List[str], str] = "lime")->None:
     if type(solution) == str:
@@ -106,7 +107,7 @@ class Knn:
     return distances
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plotn(self.referencePoints,False,"k-værdien er " + str(self.k))
+    plotn(self.referencePoints,self.line,"k-værdien er " + str(self.k))
   
   def errorRate(self)->int:#counts the number of True in error array
     e=0
