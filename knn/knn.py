@@ -107,7 +107,7 @@ class Knn:
     return distances
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plotn(self.referencePoints,self.line,"k-værdien er " + str(self.k))
+    plotn(self.referencePoints,True,self.line,"k-værdien er " + str(self.k))
   
   def errorRate(self)->int:#counts the number of True in error array
     e=0
@@ -139,7 +139,7 @@ class Knn:
     
     for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
       i.features[0] = j
-    plotn(solv,True,"Teoretisk rigtig løsning")
+    plotn(solv,False,True,"Teoretisk rigtig løsning")
 
   def testDist(self,k:int = 5):
     print(k)

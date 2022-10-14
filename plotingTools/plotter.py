@@ -49,7 +49,7 @@ def plot1 (type1:List[Point],showCordinate:bool = False, titel:str = 'Presition 
     else:
       label = "{:.2f}".format(x)
     plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,8),ha='center')
-  #printer et plot over hvordan ændringer i k pævirker antal korekte
+  #printer et plot over hvordan ændringer i k påvirker antal korrekte svar
   plt.show()
 
 def plot_line():
@@ -57,7 +57,7 @@ def plot_line():
   y_plot = (0.2*(x_plot**2))+((x_plot**-1.6))-0.3
   return plt.plot(x_plot,y_plot)
 
-def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
+def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   if line:
     plot_line()
   for j,l in zip(types,count()):
@@ -68,7 +68,7 @@ def plotn(types:List[Point],line:bool=False,kvalue:str = 'k-værdi er ikke angiv
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
     except:
       plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
-    if(l%40==0):
+    if(animate and l%40==0):
       plt.pause(1e-10)
   #labels
   plt.xlabel("x-value")
