@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
 from plotingTools.point import Point
-import sys
+from plotingTools.colorList import colors
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #Combine values for x and y
@@ -60,8 +60,16 @@ def plot_line():
 def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   if line:
     plot_line()
+  print("\n\n\n\n\nbegin plot")
   for j,l in zip(types,count()):
-    plt.scatter(j.x,j.y, color = j.features[0])
+    print("type j.x =",type(j.x))
+    print("type j.y =",type(j.y))
+    print("type j.features =",type(j.features[0]))
+    try:
+      plt.scatter(float(j.x),float(j.y),color = j.features[0])
+    except:
+      plt.scatter(float(j.x),float(j.y),color = colors[j.features[0]])
+      print(j.features[0])
     label = ""
     try:
       label = j.features[1]
