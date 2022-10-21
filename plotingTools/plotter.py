@@ -133,9 +133,9 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
     except:
       ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
   #Make Plot.ly Layout
-  mylayout = go.Layout(scene=dict(xaxis=dict( title="curb-weight"),
-                                  yaxis=dict( title="horsepower"),
-                                  zaxis=dict(title="price")),)
+  mylayout = go.Layout(scene=dict(xaxis=dict( title="x"),
+                                  yaxis=dict( title="y"),
+                                  zaxis=dict(title="z")),)
   #Plot and save html
   plotly.offline.plot({"data": [fig1],
                       "layout": mylayout},
