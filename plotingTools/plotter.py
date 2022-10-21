@@ -110,6 +110,10 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
     x = [*(j.x for j in i)]
     y = [*(j.y for j in i)]
     z = [*(j.z for j in i)]
+    markersize = [j. for j in i]
+    markercolor = [j. for j in i] 
+    markershape = [ for j in i]
+  
     try:
       ax.scatter3D(x,y,z,c = i[0].features[0])
     except:
