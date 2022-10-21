@@ -101,7 +101,7 @@ def quickTrueData():
   unKnown = kommaSeperatedReader("testData\OccupiedTest","csv")
   knownPoints = [Point(i[0],i[1],i[-1],z=i[2]) for i in known]
   unKnownPoints = [Point(i[0],i[1],z=i[2]) for i in unKnown]
-  a = Knn(knownPoints,twoDimensional=False)
+  a = Knn(knownPoints,twoDimensional=False,k=3)
   a.UpdateDataset(unKnownPoints,[i[-1] for i in unKnown])
   a.visualize()
   a.runData()
