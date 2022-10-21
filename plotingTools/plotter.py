@@ -105,17 +105,28 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
   ax.set_ylabel(labely)
   ax.set_zlabel(labelz)
   ax.grid()
+  a = ["circle","square"]
   
   for i in points:
     x = [*(j.x for j in i)]
     y = [*(j.y for j in i)]
     z = [*(j.z for j in i)]
-    markersize = [j. for j in i]
-    markercolor = [j. for j in i] 
-    markershape = [ for j in i]
+    markersize = [j.erga for j in i]
+    markercolor = [j.olga for j in i] 
+    markershape = a[i[0].features[0]]
   
     try:
-      ax.scatter3D(x,y,z,c = i[0].features[0])
+      ax.scatter3d(x,
+                   y,
+                   z,
+                   marker=dict(size=markersize,
+                               color=markercolor,
+                               symbol=markershape,
+                               opacity=0.9,
+                               reversescale=True,
+                               colorscale=colors[1]),
+                   line=dict (width=0.02),
+                   mode='markers')
     except:
       ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
   plt.show()
