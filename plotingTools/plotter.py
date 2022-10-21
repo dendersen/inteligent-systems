@@ -6,6 +6,9 @@ from typing import List
 from numpy import arange
 from plotingTools.point import Point
 from plotingTools.colorList import colors
+import plotly
+import plotly.graph_objs as go
+
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #Combine values for x and y
@@ -116,20 +119,28 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
     markershape = a[i[0].features[0]]
   
     try:
-      ax.scatter3d(x,
-                   y,
-                   z,
-                   marker=dict(size=markersize,
-                               color=markercolor,
-                               symbol=markershape,
-                               opacity=0.9,
-                               reversescale=True,
-                               colorscale=colors[1]),
-                   line=dict (width=0.02),
-                   mode='markers')
+      fig1= go.scatter3d(x,
+                          y,
+                          z,
+                          marker=dict(size=markersize,
+                                      color=markercolor,
+                                      symbol=markershape,
+                                      opacity=0.9,
+                                      reversescale=True,
+                                      colorscale=colors[1]),
+                          line=dict (width=0.02),
+                          mode='markers')
     except:
       ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
-  plt.show()
+  #Make Plot.ly Layout
+  mylayout = go.Layout(scene=dict(xaxis=dict( title="curb-weight"),
+                                  yaxis=dict( title="horsepower"),
+                                  zaxis=dict(title="price")),)
+  #Plot and save html
+  plotly.offline.plot({"data": [fig1],
+                      "layout": mylayout},
+                      auto_open=True,
+                      )
   pass
 
 def pointSorter(points:List[Point]) -> List[List[Point]]:
