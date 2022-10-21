@@ -55,4 +55,4 @@ def dif(i:list,j:list):
   Dif = 0
   for l,L in zip(i,j):
     Dif += l != L
-  return Dif
+  return Dif  
