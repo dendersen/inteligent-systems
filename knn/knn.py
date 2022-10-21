@@ -6,7 +6,7 @@ from typing import List, Union
 from itertools import count
 
 class Knn:
-  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0,solutionKnown:bool = False, animated:bool = False) -> None:
+  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0,solutionKnown:bool = False, animated:bool = False, twoDimensional:bool = True) -> None:
     self.k = k
     self.ori:List[Point] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
     self.referencePoints:List[Point] = knownDataType#contains all calculated points of differentTypes
@@ -14,6 +14,7 @@ class Knn:
     # self.numberOfTypes = len(knownDataType) #no longer used
     self.line = solutionKnown
     self.anime = animated
+    self.dimension = twoDimensional
   
   def UpdateDataset(self,data:List[Point],solution:Union[List[str], str] = "lime")->None:
     if type(solution) == str:
@@ -108,7 +109,10 @@ class Knn:
     return distances
   
   def visualize(self) -> None:#plots true and false as different items in a plot
-    plotn(self.referencePoints,self.anime,self.line,"k-værdien er " + str(self.k))
+    if self.dimension:
+      plotn(self.referencePoints,self.anime,self.line,"k-værdien er " + str(self.k))
+    else:
+      plot3D(self.referencePoints,"x","y","z")
   
   def errorRate(self)->int:#counts the number of True in error array
     e=0
@@ -140,8 +144,11 @@ class Knn:
     
     for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
       i.features[0] = j
-    plotn(solv,False,self.line,"Teoretisk rigtig løsning")
-
+    if (self.dimension):
+      plotn(solv,False,self.line,"Teoretisk rigtig løsning")
+    else:
+      plot3D(self.referencePoints,"x","y","z")
+  
   def testDist(self,k:int = 5):
     print(k)
     for i in range(0,len(Point(0,0).dist)):

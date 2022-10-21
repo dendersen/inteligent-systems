@@ -69,7 +69,6 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
       plt.scatter(float(j.x),float(j.y),color = j.features[0])
     except:
       plt.scatter(float(j.x),float(j.y),color = colors[int(j.features[0])])
-      # print(j.features[0])
     label = ""
     try:
       label = j.features[1]
@@ -87,18 +86,29 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   print("\nend plot")
   plt.show()
 
-def plot3D(points:List[Point])->None:
+def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
   ax = plt.axes(projection='3d')
   #point data
   x = [*(i.x for i in points)]
   y = [*(i.y for i in points)]
   z = [*(i.z for i in points)]
   
-  ax.set_xlabel('k-værdier')
-  ax.set_ylabel('Afstandsfunktion nr.')
-  ax.set_zlabel('Antal forkerte svar')
+  ax.set_xlabel(labelx)
+  ax.set_ylabel(labely)
+  ax.set_zlabel(labelz)
   ax.grid()
   
   ax.scatter3D(x,y,z)
   plt.show()
   pass
+
+def pointSorter(points:List[Point]):
+  sorted:List[List[Point]] = []
+  for point in points:
+    for i in sorted:
+      if(i[0].features[0] == point.features[0]):
+        i.append(point)
+        break
+    else:
+      sorted.append([point])
+  return sorted
