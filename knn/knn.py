@@ -154,7 +154,7 @@ class Knn:
     # print(k)
     for i in range(0,len(Point(0,0).dist)):
       self.calcD.append(self.buildInternalKNN(k,i,1))
-    plot1(self.calcD,self.line,'Presition med k værdien ' + str(k) + ' (Antal fejl angivet over punkt)',"afstands funktion")
+    plot1(self.calcD,True,'Presition med k værdien ' + str(k) + ' (Antal fejl angivet over punkt)',"afstands funktion")
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
