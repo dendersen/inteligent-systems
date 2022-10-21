@@ -1,5 +1,9 @@
-import knn.testKNN
+from knn.testKNN import quick, quickData, quickRand, quickTrueData
 
-knn.testKNN.quick()
+while True:
+  # quick()
+  # quickRand(100,300,0,120,25)
+  quickTrueData()
 
-input("done? ")
+  if input ("done? ") == "yes":
+    break
