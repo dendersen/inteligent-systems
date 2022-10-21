@@ -99,9 +99,10 @@ def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall
 def quickTrueData():
   known = kommaSeperatedReader("testData\OccupiedTrain","csv")
   unKnown = kommaSeperatedReader("testData\OccupiedTest","csv")
-  knownPoints = [Point(i[0],
-  i[1],
-  i[-1]) for i in known]
+  knownPoints = [Point(i[0],i[1],i[-1]) for i in known]
   unKnownPoints = [Point(i[0],i[1]) for i in unKnown]
   a = Knn(knownPoints)
   a.UpdateDataset(unKnownPoints,[i[-1] for i in unKnown])
+  a.visualize()
+  a.runData()
+  a.visualize()

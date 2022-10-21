@@ -25,14 +25,15 @@ for i in loadFile("testData/dataFromSheet","txt").split("\n"):
 
 def kommaSeperatedReader(name:str,extension:str):
   out = []
-  for i in loadFile(name,extension).split("\n"):
+  for l,i in enumerate(loadFile(name,extension).split("\n")):
     temp=[]
-    for j in i.split(","):
-      if j.isdecimal():
-        print("read succes")
+    for t,j in enumerate(i.split(",")):
+      try:
+        # print("read succes")
         temp.append(float(j))
-      else:
-        # print(f"error, cannot read   {j}   will write {-1}")
-        temp.append(-1)
+      except:
+        print(f"error, cannot read   \"{j}\"   will write {-1}\nfound on line nr.{l}, segment nr.{t}\nfile \"{name}.{extension}\"")
+        temp.append(float(-1))
+    # print(len(temp),l)
     out.append(temp)
   return out

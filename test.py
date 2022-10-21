@@ -5,5 +5,5 @@ while True:
   # quickRand(100,300,0,120,25)
   quickTrueData()
 
-  if input ("done") == "yes":
+  if input ("done? ") == "yes":
     break

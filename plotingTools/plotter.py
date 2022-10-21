@@ -60,16 +60,16 @@ def plot_line():
 def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   if line:
     plot_line()
-  print("\n\n\n\n\nbegin plot")
+  print("\n\nbegin plot")
   for j,l in zip(types,count()):
-    print("type j.x =",type(j.x))
-    print("type j.y =",type(j.y))
-    print("type j.features =",type(j.features[0]))
+    # print("type j.x =",type(j.x))
+    # print("type j.y =",type(j.y))
+    # print("type j.features =",type(j.features[0]))
     try:
       plt.scatter(float(j.x),float(j.y),color = j.features[0])
     except:
-      plt.scatter(float(j.x),float(j.y),color = colors[j.features[0]])
-      print(j.features[0])
+      plt.scatter(float(j.x),float(j.y),color = colors[int(j.features[0])])
+      # print(j.features[0])
     label = ""
     try:
       label = j.features[1]
@@ -84,6 +84,7 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   plt.title(kvalue)
   #----------------
   #printer plot
+  print("\nend plot")
   plt.show()
 
 def plot3D(points:List[Point])->None:
