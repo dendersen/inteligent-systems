@@ -1,4 +1,5 @@
 from itertools import count
+from math import floor
 from re import X
 import matplotlib.pyplot as plt
 from typing import List
@@ -65,8 +66,8 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   if not animate:
     points = pointSorter(types)
     for i in points:
-      x = [j.x for j in i]
-      y = [j.y for j in i]
+      x = [*(j.x for j in i)]
+      y = [*(j.y for j in i)]
       plt.scatter(x,y,color = i[0].features[0])
   else:
     for j,l in zip(types,count()):
@@ -106,7 +107,13 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
   ax.grid()
   
   for i in points:
-    ax.scatter3D([j.x for j in i],[j.y for j in i],[j.z for j in i],color = i[0].features[0])
+    x = [*(j.x for j in i)]
+    y = [*(j.y for j in i)]
+    z = [*(j.z for j in i)]
+    try:
+      ax.scatter3D(x,y,z,c = i[0].features[0])
+    except:
+      ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
   plt.show()
   pass
 
