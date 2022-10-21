@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from typing import List
 from numpy import arange
 from plotingTools.point import Point
-import sys
+from plotingTools.colorList import colors
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
   #Combine values for x and y
@@ -60,8 +60,15 @@ def plot_line():
 def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   if line:
     plot_line()
+  print("\n\nbegin plot")
   for j,l in zip(types,count()):
-    plt.scatter(j.x,j.y, color = j.features[0])
+    # print("type j.x =",type(j.x))
+    # print("type j.y =",type(j.y))
+    # print("type j.features =",type(j.features[0]))
+    try:
+      plt.scatter(float(j.x),float(j.y),color = j.features[0])
+    except:
+      plt.scatter(float(j.x),float(j.y),color = colors[int(j.features[0])])
     label = ""
     try:
       label = j.features[1]
@@ -76,20 +83,32 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   plt.title(kvalue)
   #----------------
   #printer plot
+  print("\nend plot")
   plt.show()
 
-def plot3D(points:List[Point])->None:
+def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
   ax = plt.axes(projection='3d')
   #point data
   x = [*(i.x for i in points)]
   y = [*(i.y for i in points)]
   z = [*(i.z for i in points)]
   
-  ax.set_xlabel('k-værdier')
-  ax.set_ylabel('Afstandsfunktion nr.')
-  ax.set_zlabel('Antal forkerte svar')
+  ax.set_xlabel(labelx)
+  ax.set_ylabel(labely)
+  ax.set_zlabel(labelz)
   ax.grid()
   
   ax.scatter3D(x,y,z)
   plt.show()
   pass
+
+def pointSorter(points:List[Point]):
+  sorted:List[List[Point]] = []
+  for point in points:
+    for i in sorted:
+      if(i[0].features[0] == point.features[0]):
+        i.append(point)
+        break
+    else:
+      sorted.append([point])
+  return sorted
