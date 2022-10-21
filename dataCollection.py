@@ -23,7 +23,7 @@ for i in loadFile("testData/dataFromSheet","txt").split("\n"):
     )
     data.append(p)
 
-def kommaSeperatedReader(name:str,extension:str):
+def kommaSeperatedReader(name:str,extension:str) -> List[List[float]]:
   out = []
   for l,i in enumerate(loadFile(name,extension).split("\n")):
     temp=[]

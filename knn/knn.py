@@ -6,13 +6,13 @@ from typing import List, Union
 from itertools import count
 
 class Knn:
-  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0,solutionKnown:bool = False, animated:bool = False, twoDimensional:bool = True) -> None:
+  def __init__(self,knownDataType:List[Point],k:int = 5,distID:int = 0,drawLine:bool = False, animated:bool = False, twoDimensional:bool = True) -> None:
     self.k = k
     self.ori:List[Point] = knownDataType#saves original know data, this ensures that you can run a test on multiple k
     self.referencePoints:List[Point] = knownDataType#contains all calculated points of differentTypes
     self.distanceCalcID = distID#which formula should be used to calculate distance
     # self.numberOfTypes = len(knownDataType) #no longer used
-    self.line = solutionKnown
+    self.line = drawLine
     self.anime = animated
     self.dimension = twoDimensional
   
@@ -132,7 +132,7 @@ class Knn:
   def visualizeK(self)->int:
     if len(self.calcK) < 1:
       print("testk() has not run, checking stardard k's")
-      self.testK(-1)
+      self.testK()
     plot1(self.calcK)
     return min(self.calcK, key = self.visKey).x
   
@@ -140,20 +140,21 @@ class Knn:
     return point.y
 
   def visualizeSolution(self)->None:
-    solv = self.ori
+    solv = self.ori.copy()
     
-    for i,j in zip(self.referencePoints[::-1].copy(),self.solution[::-1]):
+    for i,j in zip(self.data[::-1].copy(),self.solution[::-1]):
       i.features[0] = j
+      solv.append(i)
     if (self.dimension):
       plotn(solv,False,self.line,"Teoretisk rigtig løsning")
     else:
-      plot3D(self.referencePoints,"x","y","z")
+      plot3D(solv,"x","y","z")
   
   def testDist(self,k:int = 5):
-    print(k)
+    # print(k)
     for i in range(0,len(Point(0,0).dist)):
-        self.calcD.append(self.buildInternalKNN(k,i,1))
-    plot1(self.calcD,self.line,'Presition med k værdien ' + str(k) + ' (Antal fejl angivet over punkt)',"afstands funktion")
+      self.calcD.append(self.buildInternalKNN(k,i,1))
+    plot1(self.calcD,True,'Presition med k værdien ' + str(k) + ' (Antal fejl angivet over punkt)',"afstands funktion")
 
   def visualizeAll(self,Ksearch:int,DistSearch:int = len(Point(0,0).dist),evenK:bool = False):
     if evenK:
@@ -173,8 +174,8 @@ class Knn:
       k_nn.runData()#runs the algorithm
       e = k_nn.errorRate()#checks the number of errors
       if simple == 0:
-        return (Point(k,e,"Lime",[],dist))#returns the errors
+        return (Point(k,e,"Lime",z=dist))#returns the errors
       if simple == 1:
-        return (Point(dist,e,"Lime",[],k))
+        return (Point(dist,e,"Lime",z=k))
       if simple == 2:
-        return (Point(k,dist,"Lime",[],e))
+        return (Point(k,dist,"Lime",z=e))

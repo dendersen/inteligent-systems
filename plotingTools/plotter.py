@@ -1,4 +1,5 @@
 from itertools import count
+from math import floor
 from re import X
 import matplotlib.pyplot as plt
 from typing import List
@@ -60,23 +61,31 @@ def plot_line():
 def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-værdi er ikke angivet')->None:
   if line:
     plot_line()
+
   print("\n\nbegin plot")
-  for j,l in zip(types,count()):
-    # print("type j.x =",type(j.x))
-    # print("type j.y =",type(j.y))
-    # print("type j.features =",type(j.features[0]))
-    try:
-      plt.scatter(float(j.x),float(j.y),color = j.features[0])
-    except:
-      plt.scatter(float(j.x),float(j.y),color = colors[int(j.features[0])])
-    label = ""
-    try:
-      label = j.features[1]
-      plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
-    except:
-      plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
-    if(animate and l%40==0):
-      plt.pause(1e-10)
+  if not animate:
+    points = pointSorter(types)
+    for i in points:
+      x = [*(j.x for j in i)]
+      y = [*(j.y for j in i)]
+      plt.scatter(x,y,color = i[0].features[0])
+  else:
+    for j,l in zip(types,count()):
+      # print("type j.x =",type(j.x))
+      # print("type j.y =",type(j.y))
+      # print("type j.features =",type(j.features[0]))
+      try:
+        plt.scatter(float(j.x),float(j.y),color = j.features[0])
+      except:
+        plt.scatter(float(j.x),float(j.y),color = colors[int(j.features[0])])
+      label = ""
+      try:
+        label = j.features[1]
+        plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
+      except:
+        plt.annotate(label,(j.x,j.y),textcoords="offset points",xytext=(0,8),ha='center')
+      if(l%40==0):
+        plt.pause(1e-10)
   #labels
   plt.xlabel("x-value")
   plt.ylabel("y-value")
@@ -87,22 +96,28 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   plt.show()
 
 def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
+  
+  points:List[List[Point]] = pointSorter(points)
+  
   ax = plt.axes(projection='3d')
-  #point data
-  x = [*(i.x for i in points)]
-  y = [*(i.y for i in points)]
-  z = [*(i.z for i in points)]
   
   ax.set_xlabel(labelx)
   ax.set_ylabel(labely)
   ax.set_zlabel(labelz)
   ax.grid()
   
-  ax.scatter3D(x,y,z)
+  for i in points:
+    x = [*(j.x for j in i)]
+    y = [*(j.y for j in i)]
+    z = [*(j.z for j in i)]
+    try:
+      ax.scatter3D(x,y,z,c = i[0].features[0])
+    except:
+      ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
   plt.show()
   pass
 
-def pointSorter(points:List[Point]):
+def pointSorter(points:List[Point]) -> List[List[Point]]:
   sorted:List[List[Point]] = []
   for point in points:
     for i in sorted:
