@@ -6,6 +6,7 @@ from typing import List
 from numpy import arange
 from plotingTools.point import Point
 from plotingTools.colorList import colors
+from plotingTools.colorList import colors2
 import plotly
 import plotly.graph_objs as go
 
@@ -111,27 +112,37 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
   a = ["circle","square"]
   
   for i in points:
-    x = [*(j.x for j in i)]
-    y = [*(j.y for j in i)]
-    z = [*(j.z for j in i)]
-    markersize = [j.erga for j in i]
+    x_1 = [*(j.x for j in i)]
+    y_1 = [*(j.y for j in i)]
+    z_1 = [*(j.z for j in i)]
+    markersize = [j.erga/100 for j in i]
     markercolor = [j.olga for j in i] 
-    markershape = a[i[0].features[0]]
+    markershape = a[int(i[0].features[0])]
   
     try:
-      fig1= go.scatter3d(x,
-                          y,
-                          z,
+      fig1 = go.Scatter3d(x=x_1,
+                          y=y_1,
+                          z=z_1,
                           marker=dict(size=markersize,
                                       color=markercolor,
                                       symbol=markershape,
                                       opacity=0.9,
                                       reversescale=True,
-                                      colorscale=colors[1]),
+                                      colorscale=colors2[0]),
                           line=dict (width=0.02),
                           mode='markers')
     except:
-      ax.scatter3D(x,y,z,c = colors[floor(i[0].features[0])])
+      fig1 = go.Scatter3d(x=x_1,
+                          y=y_1,
+                          z=z_1,
+                          marker=dict(size=markersize,
+                                      color=markercolor,
+                                      symbol=markershape,
+                                      opacity=0.9,
+                                      reversescale=True,
+                                      colorscale=colors2[0]),
+                          line=dict (width=0.02),
+                          mode='markers')
   #Make Plot.ly Layout
   mylayout = go.Layout(scene=dict(xaxis=dict( title="x"),
                                   yaxis=dict( title="y"),
