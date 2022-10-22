@@ -1,5 +1,6 @@
 from itertools import count
 from math import floor
+from pyexpat import features
 from re import X
 import matplotlib.pyplot as plt
 from typing import List
@@ -109,18 +110,17 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
   ax.set_ylabel(labely)
   ax.set_zlabel(labelz)
   ax.grid()
-  a = ["circle","square"]
-  
+  a = ["square","circle"]
+  b = []
   for i in points:
     x_1 = [*(j.x for j in i)]
     y_1 = [*(j.y for j in i)]
     z_1 = [*(j.z for j in i)]
     markersize = [j.erga/100 for j in i]
     markercolor = [j.olga for j in i] 
-    markershape = a[int(i[0].features[0])]
-  
+    markershape = a[floor(i[0].features[0])]
     try:
-      fig1 = go.Scatter3d(x=x_1,
+      b.append(go.Scatter3d(x=x_1,
                           y=y_1,
                           z=z_1,
                           marker=dict(size=markersize,
@@ -130,9 +130,9 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
                                       reversescale=True,
                                       colorscale=colors2[0]),
                           line=dict (width=0.02),
-                          mode='markers')
+                          mode='markers'))
     except:
-      fig1 = go.Scatter3d(x=x_1,
+      b.append(go.Scatter3d(x=x_1,
                           y=y_1,
                           z=z_1,
                           marker=dict(size=markersize,
@@ -142,13 +142,15 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
                                       reversescale=True,
                                       colorscale=colors2[0]),
                           line=dict (width=0.02),
-                          mode='markers')
+                          mode='markers'))
   #Make Plot.ly Layout
-  mylayout = go.Layout(scene=dict(xaxis=dict( title="x"),
-                                  yaxis=dict( title="y"),
-                                  zaxis=dict(title="z")),)
+  mylayout = go.Layout(title=dict(text="Colors shows range of, CO2 in ppm, and figure-type if occupied (square) or not (circle)"),
+                       scene=dict(xaxis=dict(title="Temperature in Celcius"),
+                                  yaxis=dict(title="Relative humidity in %"),
+                                  zaxis=dict(title="Light in lux")),)
+  print(markershape)
   #Plot and save html
-  plotly.offline.plot({"data": [fig1],
+  plotly.offline.plot({"data": b,
                       "layout": mylayout},
                       auto_open=True,
                       )
