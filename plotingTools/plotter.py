@@ -148,7 +148,6 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
                        scene=dict(xaxis=dict(title="Temperature in Celcius"),
                                   yaxis=dict(title="Relative humidity in %"),
                                   zaxis=dict(title="Light in lux")),)
-  print(markershape)
   #Plot and save html
   plotly.offline.plot({"data": b,
                       "layout": mylayout},
