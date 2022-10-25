@@ -101,59 +101,72 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   plt.show()
 
 def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
-  
-  points:List[List[Point]] = pointSorter(points)
-  
-  ax = plt.axes(projection='3d')
-  
-  ax.set_xlabel(labelx)
-  ax.set_ylabel(labely)
-  ax.set_zlabel(labelz)
-  ax.grid()
-  a = ["square","circle"]
-  b = []
-  for i in points:
-    x_1 = [*(j.x for j in i)]
-    y_1 = [*(j.y for j in i)]
-    z_1 = [*(j.z for j in i)]
-    markersize = [j.erga/100 for j in i]
-    markercolor = [j.olga for j in i] 
-    markershape = a[floor(i[0].features[0])]
-    try:
-      b.append(go.Scatter3d(x=x_1,
-                          y=y_1,
-                          z=z_1,
-                          marker=dict(size=markersize,
-                                      color=markercolor,
-                                      symbol=markershape,
-                                      opacity=0.9,
-                                      reversescale=True,
-                                      colorscale=colors2[0]),
-                          line=dict (width=0.02),
-                          mode='markers'))
-    except:
-      b.append(go.Scatter3d(x=x_1,
-                          y=y_1,
-                          z=z_1,
-                          marker=dict(size=markersize,
-                                      color=markercolor,
-                                      symbol=markershape,
-                                      opacity=0.9,
-                                      reversescale=True,
-                                      colorscale=colors2[0]),
-                          line=dict (width=0.02),
-                          mode='markers'))
-  #Make Plot.ly Layout
-  mylayout = go.Layout(title=dict(text="Colors shows range of, CO2 in ppm, and figure-type if occupied (square) or not (circle)"),
-                       scene=dict(xaxis=dict(title="Temperature in Celcius"),
-                                  yaxis=dict(title="Relative humidity in %"),
-                                  zaxis=dict(title="Light in lux")),)
-  #Plot and save html
-  plotly.offline.plot({"data": b,
-                      "layout": mylayout},
-                      auto_open=True,
-                      )
-  pass
+  try:
+    Points:List[List[Point]] = pointSorter(points)
+    
+    ax = plt.axes(projection='3d')
+    
+    ax.set_xlabel(labelx)
+    ax.set_ylabel(labely)
+    ax.set_zlabel(labelz)
+    ax.grid()
+    a = ["square","circle"]
+    b = []
+    for i in Points:
+      x_1 = [*(j.x for j in i)]
+      y_1 = [*(j.y for j in i)]
+      z_1 = [*(j.z for j in i)]
+      markersize = [j.erga/100 for j in i]
+      markercolor = [j.olga for j in i] 
+      markershape = a[floor(i[0].features[0])]
+      try:
+        b.append(go.Scatter3d(x=x_1,
+                            y=y_1,
+                            z=z_1,
+                            marker=dict(size=markersize,
+                                        color=markercolor,
+                                        symbol=markershape,
+                                        opacity=0.9,
+                                        reversescale=True,
+                                        colorscale=colors2[0]),
+                            line=dict (width=0.02),
+                            mode='markers'))
+      except:
+        b.append(go.Scatter3d(x=x_1,
+                            y=y_1,
+                            z=z_1,
+                            marker=dict(size=markersize,
+                                        color=markercolor,
+                                        symbol=markershape,
+                                        opacity=0.9,
+                                        reversescale=True,
+                                        colorscale=colors2[0]),
+                            line=dict (width=0.02),
+                            mode='markers'))
+    #Make Plot.ly Layout
+    mylayout = go.Layout(title=dict(text="Colors shows range of, CO2 in ppm, and figure-type if occupied (square) or not (circle)"),
+                        scene=dict(xaxis=dict(title="Temperature in Celcius"),
+                                    yaxis=dict(title="Relative humidity in %"),
+                                    zaxis=dict(title="Light in lux")),)
+    #Plot and save html
+    plotly.offline.plot({"data": b,
+                        "layout": mylayout},
+                        auto_open=True,
+                        )
+  except:
+    ax = plt.axes(projection='3d')
+    #point data
+    x = [*(i.x for i in points)]
+    y = [*(i.y for i in points)]
+    z = [*(i.z for i in points)]
+    
+    ax.set_xlabel('k-værdier')
+    ax.set_ylabel('Afstandsfunktion nr.')
+    ax.set_zlabel('Antal forkerte svar')
+    ax.grid()
+    
+    ax.scatter3D(x,y,z)
+    plt.show()
 
 def pointSorter(points:List[Point]) -> List[List[Point]]:
   sorted:List[List[Point]] = []
