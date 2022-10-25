@@ -43,13 +43,10 @@ def quick():
   k.visualizeSolution()
   print(k.errorRate())
   
-  
-  t = Knn([*soll(dataKnown1.copy()),*soll(dataKnown2.copy())],1,1)
-  t.UpdateDataset(dataStart.copy(),solution.copy())
-  t.testK(range(1,19,2))
-  a = t.visualizeK()
-  t.testDist(a)
-  t.visualizeAll(7,6,True)
+  k.testK(range(1,19,2))
+  a = k.visualizeK()
+  k.testDist(a)
+  k.visualizeAll(7,6,True)
 
 def quickData(numberOfPoints = 500,percentKnown:float = 0.5,Randomnes = 0.17):
   xy,colorID = make_moons(numberOfPoints,noise=Randomnes)
@@ -70,13 +67,19 @@ def quickData(numberOfPoints = 500,percentKnown:float = 0.5,Randomnes = 0.17):
   a.UpdateDataset(unKnownList,solution)
   a.runData()
   a.visualize()
-  a.testK(range(1,14,2))
-  a.visualizeSolution()
-  b = a.visualizeK()
-  a.testDist()
-  a.visualizeAll(range(1,14,2))
+  # a.testK(range(1,14,2))
+  # a.visualizeSolution()
+  # b = a.visualizeK()
+  # a.testDist()
+  # a.visualizeAll(14)
+  
+  b = randomPoints(numberOfPoints//2,5,-5,5,-5)
+  a.UpdateDataset(b.copy())
+  a.runData()
+  a.visualize()
 
-def quickRand(numberOfKnownPoints:int,numberOfUnkownPoints:int,origin:float,tall:float,wide:float):
+
+def quickRand(numberOfKnownPoints:int = 200,numberOfUnkownPoints:int=200,origin:float = 0,tall:float = 10,wide:float=10):
   known = randomPoints(numberOfKnownPoints,wide,origin,tall,origin)
   unknown = randomPoints(numberOfUnkownPoints,wide,origin,tall,origin)
   solution = solutionGen(unknown)

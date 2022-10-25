@@ -73,7 +73,10 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
     for i in points:
       x = [*(j.x for j in i)]
       y = [*(j.y for j in i)]
-      plt.scatter(x,y,color = i[0].features[0])
+      try:
+        plt.scatter(x,y,color = i[0].features[0])
+      except:
+        plt.scatter(x,y,color = colors[i[0].features[0]])
   else:
     for j,l in zip(types,count()):
       # print("type j.x =",type(j.x))
