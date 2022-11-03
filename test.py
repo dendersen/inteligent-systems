@@ -5,10 +5,10 @@ def Test(result,expectedResult):
     print("\u001b[32m [succes]\n")
   else:
     print("\u001b[31m [failed]\n")
+    
 
 while True:
   # quick()
-  # quickData()
   # quickRand(100,300,0,120,25)
   quickTrueData()
 
