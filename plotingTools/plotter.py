@@ -10,6 +10,10 @@ from plotingTools.colorList import colors
 from plotingTools.colorList import colors2
 import plotly
 import plotly.graph_objs as go
+from dash import Dash, dcc, html, Input, Output
+import plotly.express as px
+import pandas as pd
+
 
 #Funktion for x,y-værdier
 def plot2 (Type1:List[Point],Type2: List[Point]) -> None:
@@ -107,13 +111,13 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
   try:
     Points:List[List[Point]] = pointSorter(points)
     
-    ax = plt.axes(projection='3d')
+    # ax = plt.axes(projection='3d')
     
-    ax.set_xlabel(labelx)
-    ax.set_ylabel(labely)
-    ax.set_zlabel(labelz)
-    ax.grid()
-    a = ["square","circle"]
+    # ax.set_xlabel(labelx)
+    # ax.set_ylabel(labely)
+    # ax.set_zlabel(labelz)
+    # ax.grid()
+    a = ["circle","square"]
     b = []
     for i in Points:
       x_1 = [*(j.x for j in i)]
@@ -121,41 +125,44 @@ def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsf
       z_1 = [*(j.z for j in i)]
       markersize = [j.erga/100 for j in i]
       markercolor = [j.olga for j in i] 
-      markershape = a[floor(i[0].features[0])]
-      try:
-        b.append(go.Scatter3d(x=x_1,
-                            y=y_1,
-                            z=z_1,
-                            marker=dict(size=markersize,
-                                        color=markercolor,
-                                        symbol=markershape,
-                                        opacity=0.9,
-                                        reversescale=True,
-                                        colorscale=colors2[0]),
-                            line=dict (width=0.02),
-                            mode='markers'))
-      except:
-        b.append(go.Scatter3d(x=x_1,
-                            y=y_1,
-                            z=z_1,
-                            marker=dict(size=markersize,
-                                        color=markercolor,
-                                        symbol=markershape,
-                                        opacity=0.9,
-                                        reversescale=True,
-                                        colorscale=colors2[0]),
-                            line=dict (width=0.02),
-                            mode='markers'))
-    #Make Plot.ly Layout
-    mylayout = go.Layout(title=dict(text="Colors shows range of, CO2 in ppm, and figure-type if occupied (square) or not (circle)"),
-                        scene=dict(xaxis=dict(title="Temperature in Celcius"),
-                                    yaxis=dict(title="Relative humidity in %"),
-                                    zaxis=dict(title="Light in lux")),)
-    #Plot and save html
-    plotly.offline.plot({"data": b,
-                        "layout": mylayout},
-                        auto_open=True,
-                        )
+      markershape = [j.features[0] for j in i]
+      
+      colorscales = px.colors.named_colorscales()
+      app = Dash(__name__)
+      
+      app.layout = html.Div([
+        html.H4('Interactive Plotly Express color scale selection'),
+        html.P("Color"),
+        dcc.Dropdown(
+          id='dropdown',
+          options=colorscales,
+          value='viridis'
+        ),
+        dcc.Graph(id="graph"),
+      ])
+      
+      @app.callback(
+        Output("graph", "figure"),
+        Input("dropdown", "value"))
+      def change_colorscale(scale):
+        df = pd.DataFrame({
+          "x_1": x_1,
+          "y_1": y_1,
+          "z_1": z_1,
+          "markercolor": markercolor,
+          "markersize": markersize,
+          "markershape": markershape
+        })
+        fig = px.scatter_3d(
+          df, x="x_1", y="y_1", z="z_1",
+          color="markercolor",color_continuous_scale=scale,
+          size="markersize",
+          symbol='markershape'
+          )
+        return fig
+    
+    app.run_server(debug=True)
+    
   except:
     ax = plt.axes(projection='3d')
     #point data
