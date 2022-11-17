@@ -14,6 +14,70 @@ from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
 
+def Plot2D(points:List[Point],labelx:str = "x", labely:str = "y")->None:
+  app = Dash(__name__)
+  
+  df = pd.read_csv('C:\DDU2\Plot tester\Data.csv')
+  
+  available_plots = df['PlotNr'].unique()
+  
+  app.layout = html.Div([
+      dcc.Graph(
+          id='clientside-graph-px'
+      ),
+      dcc.Store(
+          id='clientside-figure-store-px'
+      ),
+      'Plot-version',
+      dcc.Dropdown(available_plots, 'plot1', id='clientside-graph-PlotNr-px'),
+      html.Hr(),
+      html.Details([
+          html.Summary('Contents of figure storage'),
+          dcc.Markdown(
+              id='clientside-figure-json-px'
+          )
+      ])
+  ])
+  
+  @app.callback(
+      Output('clientside-figure-store-px', 'data'),
+      Input('clientside-graph-PlotNr-px', 'value')
+  )
+  def update_store_data(PlotNr):
+      dff = df[df['PlotNr'] == PlotNr]
+      return px.scatter(dff, x='x', y="y",symbol="Symbol")
+  
+  app.clientside_callback(
+      """
+      function(figure, scale) {
+          if(figure === undefined) {
+              return {'data': [], 'layout': {}};
+          }
+          const fig = Object.assign({}, figure, {
+              'layout': {
+                  ...figure.layout,
+                  'yaxis': {
+                      ...figure.layout.yaxis, type: scale
+                  }
+                }
+          });
+          return fig;
+      }
+      """,
+      Output('clientside-graph-px', 'figure'),
+      Input('clientside-figure-store-px', 'data')
+  )
+  
+  @app.callback(
+      Output('clientside-figure-json-px', 'children'),
+      Input('clientside-figure-store-px', 'data')
+  )
+  def generated_px_figure_json(data):
+      return '```\n'+json.dumps(data, indent=2)+'\n```'
+  
+  if __name__ == '__main__':
+      app.run_server(debug=True)
+
 def plot6D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
   Points:List[List[Point]]
   
