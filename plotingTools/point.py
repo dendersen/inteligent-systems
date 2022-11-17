@@ -20,10 +20,13 @@ class Point:
   def CSVDefination(self):
     return "name,x,y,Symbol"
   
-  def asCsv(self,name:str):
+  def asCsv(self,name:str,path:str)->str:
     """format:
     name,x,y,Symbol
     """
+    with(open):
+      f = open(path,"a")
+      f.write(f"\n{name},{self.x},{self.y},{self.features[0]}")
     return f"{name},{self.x},{self.y},{self.features[0]}"
   
   def attachMean(self,mean:Point)->Point:
