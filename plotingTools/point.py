@@ -15,7 +15,16 @@ class Point:
     self.dist = [self.euclid,self.manhattan,self.chebyshev,self.hammingManhattan,self.hammingEuclid,self.hammingChebyshev]
     self.erga:float = erga
     self.olga:float = olga
-    self.mean = mean
+    self.mean:Point = mean
+  
+  def CSVDefination(self):
+    return "name,x,y,Symbol"
+  
+  def asCsv(self,name:str):
+    """format:
+    name,x,y,Symbol
+    """
+    return f"{name},{self.x},{self.y},{self.features[0]}"
   
   def attachMean(self,mean:Point)->Point:
     """adds mean to point
@@ -70,7 +79,17 @@ class Point:
   def hammingChebyshev(self,point:Point):
     diff = self.hamming(point)
     return max(diff[0],diff[1],diff[2],diff[3],diff[4])
-
+  
+  def __str__(self) -> str:
+    return f"[{str(self.x)},{str(self.y)},{str(self.features[0])}]"
+  def contains(self, thing: List[object]) -> bool:
+    try:
+      for __o in thing:
+        if type(__o) == Point and __o.x == self.x and __o.y == self.y and __o.z == self.z and __o.x == self.x and __o.features[0] == self.features[0]:
+          return True
+    except:
+      return False
+    return False
 def floatToBin(F:float)->str:
   return bin(unpack("!i",pack("!f",F))[0]).replace("0b","")
 

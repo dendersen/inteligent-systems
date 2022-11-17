@@ -1,5 +1,6 @@
 from typing import List, Union
 from plotingTools.point import Point
+from plotingTools.colorList import colors
 from plotingTools.randomData import randomPoints
 from random import randint
 
@@ -25,21 +26,22 @@ class K_Mean:
         Exception: if a points is missing raises exception
     """
     for i in range(0,self.k):
-      self.means.append(self.ori[randint(0,len(self.ori))])
+      self.means.append(self.ori[randint(0,len(self.ori)-1)])
     self.referencePoints = self.DistributePoints(self.ori,self.means)
-    self.means = self.FindMean(self.referencePoints)
+    self.means = [self.FindMean(i) for i in self.sortBySharedMean(self.referencePoints)]
     self.referencePoints = self.DistributePoints(self.ori,self.means)
     
     for limit in range(0,maxIterations):
-      self.means = self.FindMean(self.referencePoints)
+      sortedmeans = self.sortBySharedMean(self.referencePoints)
+      self.means = [self.FindMean(i) for i in sortedmeans]
       temp = self.DistributePoints(self.referencePoints,self.means)
-      if len(self.referencePoints) == len(temp):#checks if points are missing
+      if len(self.referencePoints) != len(temp):#checks if points are missing
         raise Exception("missing points")
 
   def returnDist(t:tuple):
     return t[0]
   
-  def DistributePoints(self,points:List[Point], means:Point)->List[Point]:
+  def DistributePoints(self,points:List[Point], means:List[Point])->List[Point]:
     """distributes points between means
 
     Args:
@@ -50,13 +52,15 @@ class K_Mean:
         List[List[Point]]: the sorted points, the mean is the first index
     """
     distributedPoints:List[Point] = []
+    allMenas=[]
     for p in points:
       dist:tuple = (0,1e100)
       for l,i in enumerate(means):
         distance = p.distance(self.distanceCalcID,i)
         if(distance < dist[1]):
           dist = (l,distance)
-      distributedPoints.append(p.attachMean(means))
+      allMenas.append(means[dist[0]])
+      distributedPoints.append(p.attachMean(means[dist[0]]))
     return distributedPoints
   
   def FindMean(self,points:List[Point])->Point:
@@ -75,3 +79,27 @@ class K_Mean:
     yMean = sum(y)/len(y)
     zMean = sum(z)/len(z)
     return Point(xMean,yMean,z=zMean)
+  
+  def sortBySharedMean(self,points:List[Point])->List[List[Point]]:
+    temp = []
+    temp2:List[List[Point]] = []
+    for i in points:
+      if(not i.mean.contains(temp)):
+        temp.append(i.mean)
+        print(len(temp))
+        temp2.append([i])
+      else:
+        for l,j in enumerate(temp):
+          if(j == i.mean):
+            temp2[l].append(i)
+            break
+          else:
+            pass
+        else:
+          raise Exception("?")
+    return temp2
+  
+  def colorBook(self):
+    for i,j in  enumerate(self.sortBySharedMean(self.referencePoints)):
+      for l in j:
+        l.features[0] = i
