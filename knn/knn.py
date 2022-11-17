@@ -112,7 +112,7 @@ class Knn:
     if self.dimension:
       plotn(self.referencePoints,self.anime,self.line,"k-værdien er " + str(self.k))
     else:
-      plot3D(self.referencePoints,"x","y","z")
+      plot3D(self.referencePoints,"temperature in Celcius","Relative humidity (%)","Light in lux","CO2 in ppm","Humidity ratio","Occupancy (0/Circle = not occupied)")
   
   def errorRate(self)->int:#counts the number of True in error array
     e=0
