@@ -103,6 +103,13 @@ def plotn(types:List[Point],animate:bool=False, line:bool=False,kvalue:str = 'k-
   print("\nend plot")
   plt.show()
 
+
+
+  """replaces name
+  :param points: a list of points
+  """
+
+
 def plot3D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
   try:
     Points:List[List[Point]] = pointSorter(points)
