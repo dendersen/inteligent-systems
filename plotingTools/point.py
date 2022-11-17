@@ -24,9 +24,9 @@ class Point:
     """format:
     name,x,y,Symbol
     """
-    with(open):
-      f = open(path,"a")
-      f.write(f"\n{name},{self.x},{self.y},{self.features[0]}")
+    f = open(path,"a")
+    f.write(f"\n{name},{self.x},{self.y},{self.features[0]}")
+    f.close
     return f"{name},{self.x},{self.y},{self.features[0]}"
   
   def attachMean(self,mean:Point)->Point:

@@ -45,7 +45,7 @@ def Plot2D(points:List[Point],labelx:str = "x", labely:str = "y")->None:
   )
   def update_store_data(PlotNr):
       dff = df[df['PlotNr'] == PlotNr]
-      return px.scatter(dff, x='x', y="y",symbol="Symbol")
+      return px.scatter(dff, x='x', y="y",color="Color",color_discrete_sequence=True)
   
   app.clientside_callback(
       """
