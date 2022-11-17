@@ -38,7 +38,7 @@ class Knn:
       
       distances.sort(key=dist.checkDist)
       
-      feat = []
+      feat = [];
       for i,ll in zip (count(),test.features):
         cc = [l[1].point.features[i] for l in zip(range(0,self.k),distances)]#farverne af de nærmeste punkter
         
@@ -119,6 +119,7 @@ class Knn:
     for i,j in zip(self.referencePoints[::-1],self.solution[::-1]):
       if i.features[0] != j:
         e+=1
+    print ((len(self.solution) - e) / len(self.solution),"p")
     return e
   
   def testK(self,rangeOfK: range = -1) -> List[Point]:#test's for different k's on the current ori(original know points) and currently active dataset 

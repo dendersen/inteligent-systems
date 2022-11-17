@@ -1,0 +1,45 @@
+Date : 2022-11-03 14:27:04
+Directory : c:\.programering\inteligent systems
+Total : 17 files,  1636 codes, 75 comments, 95 blanks, all 1806 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| JSON     |          2 |        986 |          0 |          2 |        988 |
+| Python   |         15 |        650 |         75 |         93 |        818 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                              |         17 |      1,636 |         75 |         95 |      1,806 |
+| delOpgaver                                                     |          5 |         32 |          7 |          8 |         47 |
+| knn                                                            |          3 |        223 |         37 |         48 |        308 |
+| plotingTools                                                   |          4 |        347 |         26 |         29 |        402 |
++----------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                       | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\.programering\inteligent systems\dataCollection.py          | Python   |         33 |          2 |          4 |         39 |
+| c:\.programering\inteligent systems\del opgaver.ipynb          | JSON     |        775 |          0 |          1 |        776 |
+| c:\.programering\inteligent systems\delOpgaver\Del1.py         | Python   |         20 |          7 |          3 |         30 |
+| c:\.programering\inteligent systems\delOpgaver\Del2.py         | Python   |          3 |          0 |          1 |          4 |
+| c:\.programering\inteligent systems\delOpgaver\Del3.py         | Python   |          3 |          0 |          1 |          4 |
+| c:\.programering\inteligent systems\delOpgaver\Del4.py         | Python   |          3 |          0 |          1 |          4 |
+| c:\.programering\inteligent systems\delOpgaver\Del5.py         | Python   |          3 |          0 |          2 |          5 |
+| c:\.programering\inteligent systems\knn\distanceStorage.py     | Python   |          9 |          0 |          3 |         12 |
+| c:\.programering\inteligent systems\knn\knn.py                 | Python   |        117 |         37 |         29 |        183 |
+| c:\.programering\inteligent systems\knn\testKNN.py             | Python   |         97 |          0 |         16 |        113 |
+| c:\.programering\inteligent systems\plotingTools\colorList.py  | Python   |        133 |          0 |          2 |        135 |
+| c:\.programering\inteligent systems\plotingTools\plotter.py    | Python   |        145 |         26 |         13 |        184 |
+| c:\.programering\inteligent systems\plotingTools\point.py      | Python   |         59 |          0 |         12 |         71 |
+| c:\.programering\inteligent systems\plotingTools\randomData.py | Python   |         10 |          0 |          2 |         12 |
+| c:\.programering\inteligent systems\runDel.py                  | Python   |          5 |          0 |          0 |          5 |
+| c:\.programering\inteligent systems\test.ipynb                 | JSON     |        211 |          0 |          1 |        212 |
+| c:\.programering\inteligent systems\test.py                    | Python   |         10 |          3 |          4 |         17 |
+| Total                                                          |          |      1,636 |         75 |         95 |      1,806 |
++----------------------------------------------------------------+----------+------------+------------+------------+------------+
