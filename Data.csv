@@ -1,4 +1,5 @@
 PlotNr,x,y,Color
+<<<<<<< HEAD
 hello,1,2,0
 hello,5,6,0
 hello,7,8,0
@@ -339,3 +340,5 @@ hello,20,17,2
 hello,20,5,0
 hello,14,2,0
 hello,20,12,2
+=======
+>>>>>>> 3c695b2b8a605d1334a158be84d8dda30e17fde5

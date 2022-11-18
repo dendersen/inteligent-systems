@@ -22,3 +22,7 @@ a.run(20)
 a.colorBook()
 plotn(a.referencePoints)
 
+for  i in a.referencePoints:
+  print(i.asCsv("hello","Data.csv"))
+Plot2D()
+
