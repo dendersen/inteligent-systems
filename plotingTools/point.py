@@ -17,8 +17,11 @@ class Point:
     self.olga:float = olga
     self.mean:Point = mean
   
-  def CSVDefination(self):
-    return "name,x,y,Symbol"
+  def CSVDefination(self,path:str,name:str,symbol:str):
+    f = open(path,"w")
+    f.write(f"{name},x,y,{symbol}")
+    f.close()
+    return f"{name},x,y,{symbol}"
   
   def asCsv(self,name:str,path:str)->str:
     """format:
@@ -26,7 +29,7 @@ class Point:
     """
     f = open(path,"a")
     f.write(f"\n{name},{self.x},{self.y},{self.features[0]}")
-    f.close
+    f.close()
     return f"{name},{self.x},{self.y},{self.features[0]}"
   
   def attachMean(self,mean:Point)->Point:

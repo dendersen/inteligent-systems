@@ -53,14 +53,6 @@ def quickData(numberOfPoints = 500,percentKnown:float = 0.5,Randomnes = 0.17):
   
   xy = [i for i in xy]
   colorID = [i for i in colorID]
-  
-  unKnownList =[]
-  solution = []
-  for i in range(0,int(numberOfPoints*percentKnown)):
-    index = randint(0,len(xy)-1)
-    a = xy.pop(index)
-    unKnownList.append(Point(a[0],a[1]))
-    solution.append(colors[colorID.pop(index)])
   knownList = [Point(i[0],i[1],color=colors[j]) for i,j in zip(xy,colorID)]
   
   a = Knn(knownList)
