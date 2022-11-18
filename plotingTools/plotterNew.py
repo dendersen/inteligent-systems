@@ -13,70 +13,82 @@ import plotly.graph_objs as go
 from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
+import json
 
-def Plot2D(points:List[Point],labelx:str = "x", labely:str = "y")->None:
-  app = Dash(__name__)
+def Plot2D()->None:
+  external_stylesheets = ['C:\DDU2\Plot tester\Layout.css']
+  
+  app = Dash(__name__, external_stylesheets=external_stylesheets)
   
   df = pd.read_csv('C:\DDU2\Plot tester\Data.csv')
   
   available_plots = df['PlotNr'].unique()
   
   app.layout = html.Div([
-      dcc.Graph(
-          id='clientside-graph-px'
-      ),
-      dcc.Store(
-          id='clientside-figure-store-px'
-      ),
-      'Plot-version',
-      dcc.Dropdown(available_plots, 'plot1', id='clientside-graph-PlotNr-px'),
-      html.Hr(),
-      html.Details([
-          html.Summary('Contents of figure storage'),
-          dcc.Markdown(
-              id='clientside-figure-json-px'
-          )
-      ])
+    html.P("Change figure width:"),
+    dcc.Slider(id='slider', min=200, max=1900, step=25, value=1900,
+              marks={x: str(x) for x in [100,300,500,700,900,1100,1300,1500,1700,1900]}),
+    
+    dcc.Graph(id='clientside-graph-px'),
+    dcc.Store(
+      id='clientside-figure-store-px'
+    ),
+    'Plot-version',
+    dcc.Dropdown(available_plots, 'hello', id='clientside-graph-PlotNr-px'),
+    html.Details([
+      html.Summary('Contents of figure storage'),
+      dcc.Markdown(
+        id='clientside-figure-json-px'
+      )
+    ])
   ])
   
   @app.callback(
-      Output('clientside-figure-store-px', 'data'),
-      Input('clientside-graph-PlotNr-px', 'value')
+    Output('clientside-figure-store-px', 'data'),
+    Input('clientside-graph-PlotNr-px', 'value'),
+    Input('slider', 'value')
   )
-  def update_store_data(PlotNr):
-      dff = df[df['PlotNr'] == PlotNr]
-      return px.scatter(dff, x='x', y="y",color="Color",color_discrete_sequence=True)
+  
+  def update_store_data(PlotNr,width):
+    dff = df[df['PlotNr'] == PlotNr]  
+    dff["Color"] = dff["Color"].astype(str)
+    fig = px.scatter(dff, x='x', y="y",color="Color",height=680)
+    fig.update_layout(
+        margin=dict(l=20, r=20, t=20, b=20),
+        paper_bgcolor="LightSteelBlue",)
+    fig.update_layout(width=int(width))
+    fig.update_traces(marker=dict(size=18,
+                      line=dict(width=2,
+                        color='DarkSlateGrey')),
+                      selector=dict(mode='markers'))
+    return fig
   
   app.clientside_callback(
-      """
-      function(figure, scale) {
-          if(figure === undefined) {
-              return {'data': [], 'layout': {}};
-          }
-          const fig = Object.assign({}, figure, {
-              'layout': {
-                  ...figure.layout,
-                  'yaxis': {
-                      ...figure.layout.yaxis, type: scale
-                  }
+    """
+    function(figure, slider) {
+        const fig = Object.assign({}, figure, {
+            'layout': {
+                ...figure.layout,
+                'yaxis': {
+                    ...figure.layout.yaxis
                 }
-          });
-          return fig;
-      }
-      """,
-      Output('clientside-graph-px', 'figure'),
-      Input('clientside-figure-store-px', 'data')
+              }
+        });
+        return fig;
+    }
+    """,
+    Output('clientside-graph-px', 'figure'),
+    Input('clientside-figure-store-px', 'data'),
   )
   
   @app.callback(
-      Output('clientside-figure-json-px', 'children'),
-      Input('clientside-figure-store-px', 'data')
-  )
-  def generated_px_figure_json(data):
-      return '```\n'+json.dumps(data, indent=2)+'\n```'
+    Output('clientside-figure-json-px', 'children'),
+    Input('clientside-figure-store-px', 'data'),)
   
-  if __name__ == '__main__':
-      app.run_server(debug=True)
+  def generated_px_figure_json(data):
+    return '```\n'+json.dumps(data, indent=2)+'\n```'
+  
+  app.run_server(debug=True)
 
 def plot6D(points:List[Point],labelx:str = "k-værdier", labely:str = "Afstandsfunktion nr.", labelz:str = "Antal forkerte svar")->None:
   Points:List[List[Point]]
